@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// js最大数字表示为Number.MAX_VALUE，关于此知识点的几个问题
+		// 1、如下打印结果显示为true，因为Number.MAX_VALUE结果是e+308次方
+		// 后面加的值不足以改变四舍五入的值
+	  let result = (Number.MAX_VALUE+123)==Number.MAX_VALUE;
+		console.log(result);  //true
+		// 2、如下打印结果为false，因为数字足够大改变了结果
+		(Number.MAX_VALUE + Number.MAX_VALUE) == Number.MAX_VALUE //false
+		// 3、打印结果差异，第一个可以展示，第二个因为太小了位数太多了展示为原本的值
+		// 据测试当幂指数为-9?就不展示了，此处有特殊，记得！！！
+		console.log(5.3e-3) //0.0053
+		console.log(5.3e-324) //5.3e-324
+
+	</script>
+</body>
+</html>
