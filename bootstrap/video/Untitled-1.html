@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<div style="text-align:center;">
+<button onclick="playPause()">播放/暂停</button>
+<button onclick="makebig()">大</button>
+<button onclick="makenormal()">中</button>
+<button onclick="makesmall()">小</button>
+</br>
+<video id="video1" width="420px"style="margin-top:20px;">   
+<source src="oooo.mp4"type="video/mp4"/>
+  
+</video>
+</div>
+<script type="text/javascript">
+var myvideo=document.getElementById("video1");
+function playpause()
+{
+if (myvideo.paused)
+    myvideo.play();
+	else
+	myvideo.pause();	
+	}
+function makebig()
+{
+    myvideo.width:600;	
+	}
+function makesmall()
+{
+    myvideo.width:300;	
+	}
+</script>	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
