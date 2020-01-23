@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-  </div>
+  <div id="app">首页</div>
 </template>
 
 <script>
