@@ -16,6 +16,7 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         // do something before request send，给每个请求添加请求头
+        // token的存在形式有很多种，header/requestbody/url都可以，此处保存在header中
         if (store.getters.token) {
             config.headers["X-Token"] = getToken()
         }
