@@ -8,6 +8,8 @@ import './assets/css/global.css'
 import './utils/http.js'
 import './utils/dateformat.js'
 import './utils/permission.js'
+import './directives/index.js'
+import './filters/index.js'
 Vue.config.productionTip = false
 
 new Vue({

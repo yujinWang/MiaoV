@@ -16,7 +16,7 @@ Vue.directive('permission', {
     const action = binding.value.action
     const currentMenu = router.currentRoute.meta
     // console.log(action) // "view"等
-    console.log(currentMenu) // ["view", "edit", "add", "delete"]
+    // console.log(currentMenu) // ["view", "edit", "add", "delete"]
     if (currentMenu) {
       // 没有里面对应的任何一个权限-隐藏或者禁用(根据需要)
       if (currentMenu.indexOf(action) === -1) {
