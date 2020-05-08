@@ -11,6 +11,9 @@ import './utils/permission.js'
 import './directives/index.js'
 // import * as directives from './directives/index.js'
 // console.log(directives)
+// Object.keys(directives).forEach(key => {
+//   Vue.directive(key, directives[key])
+// })
 
 // import './filters/index.js'
 import * as filters from './filters/index.js'

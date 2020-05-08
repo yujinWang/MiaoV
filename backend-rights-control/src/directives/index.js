@@ -15,3 +15,18 @@ Vue.directive('changeColor', {
     el.style.color = 'blue'
   }
 })
+// export function globalChangeColor() {
+//   return function inserted(el, binding) {
+//     el.style.color = 'blue'
+//   }
+// }
+// export function globalChangePosition() {
+//   return function inserted(el, binding) {
+//     el.style.marginTop = '50px'
+//   }
+// }
+// export function changeColor() {
+//   return function inserted(el, binding) {
+//     el.style.color = 'blue'
+//   }
+// }
