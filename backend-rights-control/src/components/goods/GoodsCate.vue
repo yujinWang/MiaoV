@@ -17,16 +17,75 @@
     <h3>过滤器全局-filters</h3>
     <p>{{ msg3 | capitalizeGlobal }}</p>
     <p :title = 'msg2'>{{ msg2 | ellipsisGlobal(5) }}</p>
+    <new-table
+      :tableData="tableData"
+      :tableHead="tableHead"
+      :selectionShow=true
+      :indexShow=true
+      indexLabel="序号"
+      indexWidth="50"
+      @selectionChange="childSelectionChange">
+    </new-table>
   </div>
 </template>
 <script>
+import NewTable from '@/components/table'
 export default {
   data() {
     return {
       msg: 'abcd-局部过滤器-将abcd变为了大写',
       msg2: '这个字符串太长了，会省略号显示',
-      msg3: 'abcd-全局过滤器-将abcd变为了大写'
+      msg3: 'abcd-全局过滤器-将abcd变为了大写',
+      tableHead: [
+        {
+          width: 150,
+          label: '日期',
+          prop: 'date',
+          align: 'center', // 列对齐方式
+          headerAlign: 'center', // 列头对其方式
+          fixed: false, // 列是否固定
+          filterShow: true, // 是否开启过滤
+          sortable: true // 是否开启排序
+        },
+        {
+          width: 150,
+          label: '姓名',
+          prop: 'name',
+          align: 'center',
+          headerAlign: 'center',
+          fixed: false,
+          filterShow: true,
+          sortable: true
+        },
+        {
+          width: 250,
+          label: '地址',
+          prop: 'address',
+          align: 'center',
+          headerAlign: 'center',
+          fixed: false,
+          sortable: true
+        }
+      ],
+      tableData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }
+      ]
     }
+  },
+  components: {
+    NewTable
   },
   directives: {
     // inserted-被绑定元素插入父节点时候调用，el当前绑定的DOM元素，可以直接操作节点，binding为一个对象
@@ -59,6 +118,12 @@ export default {
         return value.slice(0, len) + '...'
       }
       return value // return value必须，若不满足上面添加...情况下返回原值
+    }
+  },
+  methods: {
+    childSelectionChange(data) {
+      console.log(data)
+      // 可进行删除等操作
     }
   }
 }
