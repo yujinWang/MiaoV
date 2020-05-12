@@ -32,7 +32,7 @@
         {{ value }}
       </li>
     </ul>
-    <el-button type="primary" @click="addArrData">主要按钮</el-button>
+    <el-button type="primary" @click="addArrData">通过$set给数组添加或修改数组某个元素</el-button>
     <ul class="demo">
       <li v-for="(value,index) in arrList" :key="index">
         {{ value }}
