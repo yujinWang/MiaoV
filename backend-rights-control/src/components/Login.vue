@@ -32,6 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
+    <p class="info">用admin/zhangsan登录，密码123456</p>
   </div>
 </template>
 
@@ -87,6 +88,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.info {
+  margin: 20px auto;
+  color: red;
+}
 .login_container {
   background-color: #2b4b6b;
   height: 100%;

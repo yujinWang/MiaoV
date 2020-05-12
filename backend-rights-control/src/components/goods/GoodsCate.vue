@@ -26,6 +26,18 @@
       indexWidth="50"
       @selectionChange="childSelectionChange">
     </new-table>
+    <el-button type="primary" @click="addData">通过$set增加对象属性值</el-button>
+    <ul id="v-for-object" class="demo">
+      <li v-for="(value,index) in object" :key="index">
+        {{ value }}
+      </li>
+    </ul>
+    <el-button type="primary" @click="addArrData">主要按钮</el-button>
+    <ul class="demo">
+      <li v-for="(value,index) in arrList" :key="index">
+        {{ value }}
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -36,6 +48,21 @@ export default {
       msg: 'abcd-局部过滤器-将abcd变为了大写',
       msg2: '这个字符串太长了，会省略号显示',
       msg3: 'abcd-全局过滤器-将abcd变为了大写',
+      object: {
+        title: 'How to do lists in Vue',
+        author: 'Jane Doe',
+        publishedAt: '2016-04-10',
+        age: 202
+      },
+      arrList: [1, 2, 3, 4],
+      object1: [
+        {
+          title: 'How to do lists in Vue'
+        },
+        {
+          title: 'How to do lists in Vuessss'
+        }
+      ],
       tableHead: [
         {
           width: 150,
@@ -124,6 +151,23 @@ export default {
     childSelectionChange(data) {
       console.log(data)
       // 可进行删除等操作
+    },
+    addData() {
+      // console.log(this.object)
+      // this.object.age = 20
+      // 对象属性的添加/修改都用如下方式实现-如果要修改多个属性值需要分别每次定义
+      this.$set(this.object, 'author', 'zhangsan')
+      this.$set(this.object, 'age', '1000')
+    },
+    addArrData() {
+      // 修改数组中某个值虽然打印结果中改变了，但是视图并不会刷新
+      // this.arrList[3] = 666
+      // console.log(this.arrList)
+      // 修改的方法通过如下方式进行 vm.$set(target, key, value)
+      // 目标、要修改元素的索引、新的赋值
+      // this.$set(this.arrList, 1, 777)
+      // 如果是通过push等方法操作，这相当于是改变了原数据结构，会天然生效，可以同时添加/删除多个值
+      this.arrList.push(666, 999)
     }
   }
 }
