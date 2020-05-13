@@ -1,10 +1,7 @@
 <template>
   <div class="login_container">
     <div class="login_box">
-      <!-- 头像区域 -->
-      <div class="avatar_box">
-        <img src="../assets/logo.png" alt />
-      </div>
+      <p class="info">用admin/zhangsan登录，密码123456</p>
       <!-- 登录表单区域 -->
       <el-form
         ref="loginFormRef"
@@ -32,7 +29,6 @@
         </el-form-item>
       </el-form>
     </div>
-    <p class="info">用admin/zhangsan登录，密码123456</p>
   </div>
 </template>
 
