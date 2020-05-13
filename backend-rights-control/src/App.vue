@@ -9,6 +9,11 @@
 import { initDynamicRouters } from '@/router'
 export default {
   name: 'app',
+  data() {
+    return {
+      foo: 123
+    }
+  },
   created() {
     initDynamicRouters()
   }
