@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #div1 {
+      width: 100px;
+      height: 50px;
+      border: 2px solid red;
+      float: left;
+    }
+    tr:nth-child(2n) {
+      background-color: #f3f3f3;
+    }
+    tr:nth-child(2n+1) {
+      background-color: pink;
+    }
+    tr:nth-child(2n+1):hover {
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="div1">
+  </div>
+  <table>
+    <thead>表头</thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+<script>
+  // 1-获取数组中的最大值-Math.max接受Number类型的参数，xxx.call(this,arg1,arg2,arg3)=xxx.apply(this,arguments)
+  var arr = [1,30,2,6]
+  // console.log(Math.max(arr[0],arr[1],arr[2],arr[3])) // 30
+  // console.log(Math.max.call(Math,arr[0],arr[1],arr[2],arr[3])) // 30
+  // console.log(Math.max.apply(Math,arr)) // 30
+
+  // 2-写一个函数获取页面中宽高大于50px的节点-document.all页面所有节点
+  function traverse() {
+    var arr = [];
+    var elements = [];
+    if (document.all) { // document.all返回页面中所有节点的htmlcollection集合
+      elements = document.all;
+    } else {
+      elements = document.getElementsByTagName("*");
+    }
+    //console.log(elements.length);
+    for (var i = 0; i < elements.length; i++) {
+      var ele = elements[i];
+      //console.log(ele.tagName);
+      //width 返回的是字符串 offsetWidth 返回的是带边框的 Number 型的数字
+      var width = parseFloat(ele.style.width) || ele.offsetWidth;
+      //console.log(width);
+      var height = parseFloat(ele.style.height) || ele.offsetHeight;
+      //console.log(height);
+      if (width > 50 && height > 50) {
+        arr.push(elements[i].tagName);
+      }
+    }
+    return arr;
+  }
+  // console.log(traverse());
+
+  // 3-sum函数求和
+  // Should equal 15
+  // sum(1, 2, 3, 4, 5);
+  // Should equal 0
+  // sum(5, null, -5);
+  // Should equal 10
+  // sum('1.0', false, 1, true, 1, 'A', 1, 'B', 1, 'C', 1, 'D', 1, 'E', 1, 'F', 1, 'G', 1);
+  // Should equal 0.3, not 0.30000000000000004
+  // sum(0.1, 0.2);
+  function sum() {
+    // arguments对象不是一个Array，只有length和索引，转换方法如下
+    // var args = Array.prototype.slice.call(arguments);
+    // var args = [].slice.call(arguments);
+    // ES2015
+    // const args = Array.from(arguments);
+    // const args = [...arguments];
+    console.log(arguments)
+    let toArray = [...arguments]
+    let firstStep = toArray.filter(item => item !== true && item !== false && item !== null) // 过滤布尔值和null
+    console.log(firstStep)
+    let tempArr = firstStep.map(item => {
+      return (Number(item) !== NaN)
+    })
+    console.log(tempArr)
+  }
+  // sum(1,2,3,33,'23','abc',true,false,'20',null)
+  // 下面简洁版本-对于无法转换的null/NaN等，取后面或值0
+  function sum1() {
+    var nResult = 0;
+    for (var i = 0, l = arguments.length; i < l; i++) {
+      nResult += window.parseFloat(arguments[i]) || 0;
+    }
+    return nResult.toFixed(3) * 1000 / 1000;
+  }
+  console.log(sum1(1,2,3,33,'23','abc',true,false,'20',null))
+
+  // 输出对象中值大于2的key的数组
+  var data1 = {a: 1, b: 2, c: 3, d: 4};
+  let result = Object.keys(data1).filter(x => data1[x] > 2);
+  console.log(result);
+
+  // 
+</script>
+</html>
