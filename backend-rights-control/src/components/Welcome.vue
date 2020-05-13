@@ -37,8 +37,8 @@ export default {
   },
   components: { Child },
   mounted() {
-    console.log(this.filterMenuList)
-    console.log('this.$root.foo', this.$root)
+    // console.log(this.filterMenuList)
+    // console.log('this.$root.foo', this.$root)
   },
   computed: {
     filterMenuList() {
