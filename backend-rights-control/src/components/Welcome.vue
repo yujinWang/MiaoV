@@ -71,6 +71,16 @@ export default {
     },
     testFunc() {
       return '函数中的返回值'
+    },
+    // 最大公约数
+    commonDivisor(m, n) {
+      let r = m % n
+      if (r === 0) {
+        this.result = n
+        return this.result
+      } else {
+        return this.commonDivisor(n, r)
+      }
     }
   }
 }
