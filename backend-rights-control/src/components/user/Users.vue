@@ -41,8 +41,8 @@
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button
-              type="primary" 
-              icon="el-icon-edit" 
+              type="primary"
+              icon="el-icon-edit"
               size="mini">
             </el-button>
             <!-- 删除按钮 -->
@@ -59,8 +59,8 @@
               placement="top"
               :enterable="false">
               <el-button
-                type="warning" 
-                icon="el-icon-setting" 
+                type="warning"
+                icon="el-icon-setting"
                 size="mini">
               </el-button>
             </el-tooltip>
@@ -155,10 +155,10 @@ export default {
       // 添加表单的验证规则对象
       addFormRules: {
         username: [
-          { 
-            required: true, 
-            message: '请输入用户名', 
-            trigger: 'blur' 
+          {
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
           },
           {
             min: 3,
@@ -168,10 +168,10 @@ export default {
           }
         ],
         password: [
-          { 
-            required: true, 
-            message: '请输入密码', 
-            trigger: 'blur' 
+          {
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
           },
           {
             min: 6,
@@ -181,25 +181,25 @@ export default {
           }
         ],
         email: [
-          { 
-            required: true, 
-            message: '请输入邮箱', 
-            trigger: 'blur' 
+          {
+            required: true,
+            message: '请输入邮箱',
+            trigger: 'blur'
           },
-          { 
-            validator: checkEmail, 
-            trigger: 'blur' 
+          {
+            validator: checkEmail,
+            trigger: 'blur'
           }
         ],
         mobile: [
-          { 
-            required: true, 
-            message: '请输入手机号', 
-            trigger: 'blur' 
+          {
+            required: true,
+            message: '请输入手机号',
+            trigger: 'blur'
           },
-          { 
-            validator: checkMobile, 
-            trigger: 'blur' 
+          {
+            validator: checkMobile,
+            trigger: 'blur'
           }
         ]
       }

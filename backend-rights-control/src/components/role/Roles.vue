@@ -24,15 +24,15 @@
         <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
         <el-table-column label="操作" width="300px">
           <template slot-scope="scope">
-            <el-button 
-              size="mini" 
-              type="primary" 
-              icon="el-icon-edit">
+            <el-button
+              size='mini'
+              type='primary'
+              icon='el-icon-edit'>
               编辑
             </el-button>
-            <el-button 
-              size="mini" 
-              type="danger" 
+            <el-button
+              size="mini"
+              type="danger"
               icon="el-icon-delete"
               @click="removeById(scope.row.id)"
               >
