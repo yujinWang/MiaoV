@@ -235,7 +235,85 @@
   z = add(x);
   // console.log(x,y,z) // 1，4，4
 
-  
+  // 12-用js实现sort排序函数-用快速排序实现-找一个基准点(一般取中间位置)
+  // 循环数组，对小于基准值的放数组A，对大于基准值的放数组B，递归调用并拼接返回
+  // 递归每次将左右两侧问题缩小一半？？？可能描述欠准确
+  function quickSort(arr) {
+    if(arr.length <=1) {
+      return arr
+    }
+    var less = [];
+    var greater = [];
+    var pointX = Math.floor(arr.length/2) // 基准点索引
+    var poinxVal = arr.splice(pointX,1)[0] // 基准点值
+    // 遍历数组
+    for(var i=0;i<arr.length;i++) {
+      if(arr[i] < poinxVal) {
+        less.push(arr[i])
+      }else {
+        greater.push(arr[i])
+      }
+    }
+    // 递归调用排序好的数据并将两部分拼接-根据拼接顺序可实现升序或者降序
+    return quickSort(less).concat([poinxVal],quickSort(greater))
+    // return quickSort(greater).concat([poinxVal],quickSort(less))
+  }
+  var arr2 = [2,43,1,5]
+  // console.log(quickSort(arr2))
+
+  // 13-请给Array本地对象增加一个原型方法，它用于删除数组条目中重复的条目(可能有多个)，
+  // 返回值是一个包含被删除的重复条目的新数组
+  Array.prototype.quchong = function() {
+    var result = [];
+    for(var i=0;i<this.length;i++) {
+      for(var j=i+1;j<this.length;j++) {
+        if(this[i] == this[j]) {
+          result.push(this.splice(j,1)[0]) // splice返回被删除元素，是一个数组，用[0]取值
+        }
+      }
+    }
+    return result
+  }
+  // console.log([1,22,22,3,6,6].quchong())
+
+  // 14-请编写一个 JavaScript 函数 parseQueryString，它的用途是把 URL参数解析为一个对象
+  // var url = “http://www.taobao.com/index.php?key0=0&key1=1&key2=2.....”
+  // var obj = parseQueryString(url);
+  // alert(obj.key0) // 输出 0
+  function parseQueryString(url) {
+    var keys = url.split("?")[1];
+    var temp = keys.split("&");
+    var result = {};
+    for(var i=0;i<temp.length;i++) {
+      var temp2 = temp[i].split("=");
+      result[temp2[0]]=temp2[1]
+    }
+    return result
+  }
+  var url = "http://www.taobao.com/index.php?key0=0&key1=1&key2=2"
+  // console.log(parseQueryString(url))
+
+  // 15-请编写一个 JavaScript 函数 toRGB，它的作用是转换 CSS 中常用的颜色编码
+  // 核心的一点是将rbg中的颜色进行16进制的转换
+  // alert(toRGB("#0000FF")); // 输出 rgb(0, 0, 255)
+  // alert(toRGB("invalid")); // 输出 invalid
+  // alert(toRGB("#G00")); // 输出 #G00
+  function toRGB(color) {
+    var reg = /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/;
+    var match = color.match(reg);
+    return match ? 'rgb('+parseInt(match[1],16)+','+parseInt(match[2],16)+','+parseInt(match[3],16)+')' : color
+  }
+  // console.log(toRGB("#0000FF"))
+  // console.log(toRGB("invalid"))
+  // console.log(toRGB("#G00"))
+
+  // 16-将数字转化为千分位的格式如100000==>100,000 \b匹配单词的开始或结束
+  function formateData(param) {
+    var re=/(?=(?!\b)(\d{3})+$)/g; // 对这段并不是很明白
+    return param.replace(re,",");
+  }
+  var param = "15000000"
+  // console.log(formateData(param))
 
 </script>
 </html>
