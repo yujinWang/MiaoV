@@ -133,13 +133,109 @@
     }
     return nResult.toFixed(3) * 1000 / 1000;
   }
-  console.log(sum1(1,2,3,33,'23','abc',true,false,'20',null))
+  // console.log(sum1(1,2,3,33,'23','abc',true,false,'20',null))
 
   // 输出对象中值大于2的key的数组
   var data1 = {a: 1, b: 2, c: 3, d: 4};
   let result = Object.keys(data1).filter(x => data1[x] > 2);
-  console.log(result);
+  // console.log(result);
 
-  // 
+  // 4-如何获取UA(user agent)浏览器代理信息
+  function whatBrowser() {
+    document.Browser.Name.value=navigator.appName;
+    document.Browser.Version.value=navigator.appVersion;
+    document.Browser.Code.value=navigator.appCodeName;
+    document.Browser.Agent.value=navigator.userAgent;
+  }
+
+  // 5-js对象深拷贝-需要区分数组和对象-while语句，当条件为true的时候会循环执行
+  // var aaa = [];
+  // console.log(aaa instanceof Array)
+  // function clone(obj) {
+  //   var result;
+  //   if(obj instanceof Array) {
+  //     result = []; // 创建一个新的空数组
+  //     let len = obj.length;
+  //     while(len--) {
+  //       result.push(result[len] = obj[len])
+  //     }
+  //     return result;
+  //   }else if(obj instanceof Object) {
+  //     result = {}; // 创建一个新的空对象
+  //     for(var k in obj) {
+  //       result[k] = obj[k]
+  //     }
+  //     return result;
+  //   }else {
+  //     return obj;
+  //   }
+  // }
+  // var arr = [1,3,6,3,26,66]; // [1, 3, 6, 3, 26, 66, 66, 26, 3, 6, 3, 1] 有点问题！！！
+  // var obj = { "name": "zhangsan", "age": 20 }; // { "name": "zhangsan", "age": 20 }
+  // console.log(clone(arr));
+
+  // 6-eval是魔鬼-作用是把字符串形式的js代码解析成js并执行
+  // 避免使用eval非常耗性能，一次解析成js语句，一次执行
+  // eval("alert('我是由eval解析来的alert')")
+  
+  // 7-哪些操作会造成内存泄漏？
+  // 内存泄漏指任何对象在您不再拥有或需要它之后仍然存在。
+  // 垃圾回收器定期扫描对象，并计算引用了每个对象的其他对象的数量。如果一个对象的
+  // 引用数量为 0（没有其他对象引用过该对象），或对该对象的惟一引用是循环的，那么该对
+  // 象的内存即可回收。
+  // 1. setTimeout 的第一个参数使用字符串而非函数的话，会引发内存泄漏。
+  // 2. 闭包
+  // 3. 控制台日志
+  // 4. 循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）
+
+  // 8-闭包一题
+  function Foo(){
+    var i=0;
+    return function(){
+      document.write(i++);
+    }
+  }
+  var f1=Foo(),
+  f2=Foo();
+  // f1(); // 0
+  // f1(); // 1
+  // f2(); // 0
+  // f2(); // 1
+  // f2(); // 2
+
+  // 9-indexOf功能，如果存在返回匹配的位置，否则返回-1
+  function myIndexOf(str,subStr) {
+    var result = str.match(subStr);
+    return result ? result.index : -1
+  }
+  var str1 = "hello";
+  var subStr1 = "o";
+  // console.log(myIndexOf(str1,subStr1));
+  // 或者
+  function myIndexOf1(a,b) {
+    return a.search(b)
+  }
+  // console.log(myIndexOf1(str1,subStr1))
+
+  // 10-以下代码的输出结果
+  // console.log(1+ "2"+"2"); // "122" 进行字符串的拼接
+  // console.log(1+ +"2"+"2"); // "32"-- +"2"加号为一元操作运算符，将字符串转换为数字 1+2=3再和"2"拼接
+  // console.log("A"- "B"+"2"); // "NaN2"
+  // console.log("A"- "B"+2); // NaN
+
+  // 11-js预编译执行-js预编译会将下面代码中的add变为下面同名第二个add，需注意这点
+  var x = 1, y = z = 0;
+  function add(n) {
+    return n = n + 1;
+  }
+  y = add(x);
+  function add(n) {
+    return n = n + 3;
+  }
+  z = add(x);
+  // console.log(x,y,z) // 1，4，4
+
+  
+
 </script>
 </html>
