@@ -315,5 +315,21 @@
   var param = "15000000"
   // console.log(formateData(param))
 
+  // 17-取出数组的奇数项和偶数项
+  function evenAndOdd(arr) {
+    var even = [];
+    var odd = [];
+    arr.forEach((item,index) => {
+      if(index % 2 == 0) {
+        even.push(item)
+      }else{
+        odd.push(item)
+      }
+    })
+    return [even,odd]
+  }
+  var arrOdd = [555,222,111,333,777,99999999]
+  console.log(evenAndOdd(arrOdd))
+
 </script>
 </html>
