@@ -352,5 +352,52 @@
     allTime += (endTime - startTime) // 初始没加括号-导致没有得到想要的效果、、
     this.innerHTML = '<h3>'+allTime+'</h3><h4>'+times+'</h4>'
   }
+
+  // 19-回文-第二种
+  function findSymmetryNum(s,o){
+    var arr=[];
+    for(var i=s;i<=o;i++){
+      var str=''+i,sl=str.length,middle=0,flag=true;
+      if(sl%2===0){
+        middle=sl/2;
+      }else{
+        middle = (sl-1)/2;
+      }
+      for(var m=0;m<middle;m++){
+        if(str.substr(0+m,1)!==str.substr(-1-m,1)){
+          flag = false;
+        }
+      }
+      flag&&arr.push(i);
+      }
+      console.log(arr);
+    return arr;
+  }
+  // findSymmetryNum(1,100);
+
+  // 20-判断一个字符串中出现次数最多的字符并统计其次数
+  function maxNum(str) {
+    var obj = {};
+    for(var i=0;i<str.length;i++) {
+      var key = str[i]; // 字符串的每一项
+      if(!obj[key]) {
+        obj[key] = 1
+      }else {
+        obj[key]++
+      }
+    }
+    var maxs = 0;
+    var maxKey = "";
+    for(var k in obj) {
+      if(maxs < obj[key]) {
+        maxs = obj[key];
+        maxKey = k;
+      }
+    }
+    return [maxKey, maxs]
+  }
+
+  var strMax = "abrsgaasghsaaa";
+  // console.log(maxNum(strMax));
 </script>
 </html>
