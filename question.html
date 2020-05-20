@@ -20,6 +20,11 @@
     tr:nth-child(2n+1):hover {
       background-color: blue;
     }
+    #div2 {
+      width: 200px;
+      height: 100px;
+      border: 2px solid red;
+    }
   </style>
 </head>
 <body>
@@ -65,6 +70,7 @@
       </tr>
     </tbody>
   </table>
+  <div id="div2">记录鼠标经过次数停留总时长</div>
 </body>
 <script>
   // 1-获取数组中的最大值-Math.max接受Number类型的参数，xxx.call(this,arg1,arg2,arg3)=xxx.apply(this,arguments)
@@ -329,7 +335,22 @@
     return [even,odd]
   }
   var arrOdd = [555,222,111,333,777,99999999]
-  console.log(evenAndOdd(arrOdd))
+  // console.log(evenAndOdd(arrOdd))
 
+  // 18-鼠标在某个元素内累计停留时长
+  var oDiv2 = document.getElementById("div2")
+  var startTime = 0;
+  var endTime = 0;
+  var allTime = 0;
+  var times = 0;
+  oDiv2.onmouseenter = function(ev) {
+    startTime = Date.now();
+  }
+  oDiv2.onmouseleave = function(ev) {
+    endTime = Date.now();
+    times++;
+    allTime += (endTime - startTime) // 初始没加括号-导致没有得到想要的效果、、
+    this.innerHTML = '<h3>'+allTime+'</h3><h4>'+times+'</h4>'
+  }
 </script>
 </html>
