@@ -80,7 +80,7 @@
       ></el-pagination>
     </el-card>
 
-    <p>拖动元素到右边</p>
+    <p>移动元素到右边</p>
     <div class="main" @mousedown="startDrag" @mouseup="endDrad">
       <div class="left">
         <button>按钮</button>
