@@ -399,5 +399,52 @@
 
   var strMax = "abrsgaasghsaaa";
   // console.log(maxNum(strMax));
+
+  // 21-短路运算
+  // 语法：表达式1 && 表达式2
+  // 如果第一个表达式1的值为真，则返回表达式2
+  // 如果第一个表达式1的值为假，则返回表达式1
+
+  // 语法：表达式1 || 表达式2
+  // 如果第一个表达式1的值为真，则返回表达式1
+  // 如果第一个表达式1的值为假，则返回表达式2
+  // console.log(123&&456) // 456
+  // console.log(123||456) // 123
+
+  // 22-随机抛5枚硬币，求3枚及以上朝上的概率
+  // 设想-如下arrNum可以被分割成多少种两个元素组成的数组即为抛硬币结果总数total
+  // 朝上结果[[1,1],[1,1],[1,1],[1,1],[1,1]] 5种，5/total 为结果
+  // var arrNum = [0,1,0,1,0,1,0,1,0,1] // 模拟5枚硬币正反 不合适用这种解决方式-未解决
+  // function probability(arr) {
+  //   var result = []; // 抛硬币结果集合-二维数组
+  //   for(var i=0;i<arr.length;i+=2) {
+  //     for(var j=i*2+1;j<arr.length;j++) {
+  //       var temp = []
+  //       temp.push(arr[i],arr[j])
+  //       result.push(temp)
+  //     }
+  //   }
+  //   return result
+  // }
+  // console.log(probability(arrNum))
+
+  // 22-随机抛硬币
+  // 阶乘函数
+  function factiry(num) {
+    var result = 1;
+    if(num == 1) {
+      return 1
+    }else {
+      for(var i=1;i<=num;i++) {
+        result *= i
+      }
+    }
+    return result
+  }
+  // 排列组合
+  function C(x,y) {
+    return ((factiry(5)/factiry(2))/factiry(3))/Math.pow(2,5) // C(5,3)
+  }
+  console.log(C(5,3)) // 0.3125 5/16
 </script>
 </html>
