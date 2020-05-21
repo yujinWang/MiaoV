@@ -80,6 +80,16 @@
       ></el-pagination>
     </el-card>
 
+    <p>拖动元素到右边</p>
+    <div class="main" @mousedown="startDrag" @mouseup="endDrad">
+      <div class="left">
+        <button>按钮</button>
+        <h2>h2标题</h2>
+      </div>
+      <div class="right">
+
+      </div>
+    </div>
     <!-- 添加用户的对话框 -->
     <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
       <!-- 内容主体区域 -->
@@ -202,7 +212,8 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      targetEve: ''
     }
   },
   created() {
@@ -255,10 +266,44 @@ export default {
         return this.$message.error('删除失败！')
       }
       this.$message.success('删除成功！')
+    },
+    // 开始拖拽
+    startDrag(ev) {
+      this.targetEve = ev.target.cloneNode(true)
+    },
+    // 结束拖拽
+    endDrad(ev) {
+      const tempTarget = document.querySelector('.right')
+      tempTarget.appendChild(this.targetEve, tempTarget)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+  .main {
+    width: 100%;
+    height: 200px;
+    border: 1px solid blue;
+  }
+  .main .left {
+    width: 200px;
+    height: 100%;
+    float: left;
+    background: #e3e3e3;
+  }
+  .main .right {
+    width: calc(100% - 200px);
+    height: 100%;
+    float: right;
+    background: #d5d5d5;
+  }
+  .main h2 {
+    margin: 0;
+    padding: 0;
+    background: pink;
+  }
+  .main h2:hover,.main button:hover {
+    cursor: move;
+  }
 </style>
