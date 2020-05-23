@@ -445,6 +445,54 @@
   function C(x,y) {
     return ((factiry(5)/factiry(2))/factiry(3))/Math.pow(2,5) // C(5,3)
   }
-  console.log(C(5,3)) // 0.3125 5/16
+  // console.log(C(5,3)) // 0.3125 5/16
+
+  // 23-去除一个数组里面的重复项
+  // 1-新建一个空数组，检索不在数组中的元素才添加
+  function unique(arr) {
+    var temp = [];
+    for(var i=0;i<arr.length;i++) {
+      if(temp.indexOf(arr[i]) == -1) {
+        temp.push(arr[i])
+      }
+    }
+    return temp
+  }
+  var uniqueArr = [1,1,2,2,3,3,4]
+  // console.log(unique(uniqueArr));
+
+  // 2-对象键值去重
+  function unique2(arr) {
+    var obj = {};
+    var newArr = [];
+    var index = 0;
+    for(var i=0;i<arr.length;i++) {
+      if(obj[arr[i]]==undefined) {
+        obj[arr[i]] = 1;
+        newArr[index++] = arr[i];
+      }else {
+        obj[arr[i]] = 1;
+        continue;
+      }
+    }
+    return newArr;
+  }
+  // console.log(unique2(uniqueArr));
+
+  // 24-定义一个方法，让它可以代理console.log方法
+  // 更多的目的应该是提供一种解决问题的方向，遇到同类问题看是否能由此获得一些思路
+  // 基础版本-如果输入多个参数(不定项个参数)，那么此方法就不能满足要求了
+  function log(msg,msg1) {
+    return console.log(msg,msg1);
+  }
+  // log("hello world","123");
+  // 最终版-call输入每个参数，apply输入参数集合
+  function log2() {
+    return console.log.apply(console,arguments);
+  }
+  // log2("hello world")
+  // log2("hello world","123")
+
+  // 
 </script>
 </html>
