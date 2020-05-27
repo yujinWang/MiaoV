@@ -109,15 +109,13 @@
   // 7、碰撞检测
   function collisionTest() {
     var len = matrix.length;
-    console.log(matrix)
     if(y+len>=data.length) {
       return true
     }
-    // [[1,1,1,1]]
-    // [[1,1],[1,1]]
-    for(var i=len-1;i<len;i++) { // ???
+    // 检测方块最下面一个元素和网格中的元素如果为1则为碰撞，循环需从最后一个开始即len-1
+    for(var i=len-1;i<len;i++) {
       for(var j=0;j<matrix[i].length;j++) {
-        if(matrix[i][j]&&data[i+y+1][j+x] ==1) {
+        if(matrix[i][j]&&data[i+y+1][j+x] ==1) { // +1检测下面一个方块
           return true
         }
       }
