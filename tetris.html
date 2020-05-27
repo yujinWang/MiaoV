@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    #canvas {
+      background: #f3f3f3;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas width="500" height="500" id="canvas"></canvas>
+</body>
+<script>
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  // ctx.fillStyle = "red";
+  // ctx.fillRect(10,10,50,50)
+  // ctx.fillRect(70,10,50,50)
+  // 1、地图网格创建-0表示静止方块，1表示移动的方块
+  function initMap(row,col) {
+    var map = [];
+    for(var i=0;i<row;i++) {
+      map.push([]);
+      for(var j=0;j<col;j++) {
+        map[i].push(0);
+      }
+    }
+    return map
+  }
+  // 2、地图方块创建
+  function render(data,gc) {
+    var wid = 500 / 15 - 10;
+    var hei = wid;
+    var row = data.length;
+    var col = data[0].length; // 每行长度，取第一项
+    for(var i=0;i<row;i++) {
+      for(var j=0;j<col;j++) {
+        // gc.fillStyle = "#626ed6";
+        gc.fillStyle = data[i][j] == 0 ? "#97a1f0" : "#ff0000";
+        gc.fillRect((wid+5)*j+10,(wid+5)*i+10,wid,hei) // 5调整方块间距，10控制上左边距
+      }
+    }
+  }
+  var data = initMap(17,17);
+  // 3、随机取出一个方块
+  function mold() {
+    var num = Math.floor(Math.random()*7);
+    var arr = [
+      [[1,1,1,1]],
+      [[1,1],[1,1]],
+      [[1,1,0],[0,1,1]],
+      [[0,1,1],[1,1,0]],
+      [[0,1,0],[1,1,1]],
+      [[1,0,0],[1,1,1]],
+      [[0,0,1],[1,1,1]]
+    ]
+    return arr[num]
+  }
+  // 4、将随机取出的方块插入到网格中
+  function create(arr) {
+    // var arr = mold();
+    for(var i=0;i<arr.length;i++) {
+      for(var j=0;j<arr[i].length;j++) {
+        if(!data[i+y][j+x]) {
+          data[i+y][j+x] = arr[i][j]; // 7方块从最左边偏移位置
+        }
+      }
+    }
+    render(data,ctx)
+  }
+
+  var y = 0;
+  var x = 7;
+  var matrix = mold();
+  render(data,ctx)
+  create(matrix);
+  setInterval(function() {
+    fall();
+  },200)
+  // 5、方块下落
+  function fall() {
+    // if(y+matrix.length>=data.length) {
+    if(collisionTest()) {
+      y = 0;
+      matrix = mold();
+    }
+    clear(matrix);
+    y++;
+    create(matrix);
+  }
+
+  // 6、消除之前的方块-对应数组元素赋值为0即可
+  function clear(arr) {
+    for(var i=0;i<arr.length;i++) {
+      for(var j=0;j<arr[i].length;j++) {
+        data[i+y][j+x] = 0;
+      }
+    }
+  }
+
+  // 7、碰撞检测
+  function collisionTest() {
+    var len = matrix.length;
+    console.log(matrix)
+    if(y+len>=data.length) {
+      return true
+    }
+    // [[1,1,1,1]]
+    // [[1,1],[1,1]]
+    for(var i=len-1;i<len;i++) { // ???
+      for(var j=0;j<matrix[i].length;j++) {
+        if(matrix[i][j]&&data[i+y+1][j+x] ==1) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+  play();
+  // 8、方块左右移动
+  function play() {
+    document.onkeydown = function(ev) {
+      switch(ev.keyCode) {
+        case 37: // 向左移动
+          clear(matrix);
+          x--;
+          if(x < 0) {
+            x = 0;
+          }
+          create(matrix);
+        break;
+        case 39: // 向右移动
+          clear(matrix);
+          x++;
+          if(x + matrix[0].length >= data[0].length) {
+            x = data[0].length - matrix[0].length
+          }
+          create(matrix);
+        break;
+        case 38: // 变形
+        break;
+        case 40: // 加速向下
+        break;
+      }
+    }
+  }
+
+
+  // 方块结构-如下面的田字
+  // data[0][5] = 1;
+  // data[0][6] = 1;
+  // data[1][5] = 1;
+  // data[1][6] = 1;
+</script>
+</html>
