@@ -66,7 +66,6 @@
   }
   // 4、将随机取出的方块插入到网格中
   function create(arr) {
-    // var arr = mold();
     for(var i=0;i<arr.length;i++) {
       for(var j=0;j<arr[i].length;j++) {
         if(!data[i+y][j+x]) {
@@ -79,13 +78,11 @@
 
   var y = 0;
   var x = 7;
+  var timer = null;
+  var onOff = false;
   var matrix = mold();
-  render(data,ctx)
+  render(data,ctx);
   create(matrix);
-  setInterval(function() {
-    fall();
-  },200)
-  // 5、方块下落
   function fall() {
     // if(y+matrix.length>=data.length) {
     if(collisionTest()) {
@@ -144,18 +141,77 @@
           create(matrix);
         break;
         case 38: // 变形
+          clear(matrix);
+          rotate();
+          create(matrix);
         break;
         case 40: // 加速向下
+          if(onOff) return;
+          onOff = true;
+          clearInterval(timer);
+          auto(100);
         break;
       }
     }
+    // 加速向下键盘抬起时候
+    document.onkeyup = function(ev) {
+      if(ev.keyCode == 40) {
+        onOff = false;
+        clearInterval(timer); // 清除定时器
+        auto(1000); // 恢复原来的速度
+      }
+    }
   }
-
+  // 9-优化-控制方块移动速度
+  function auto(time) {
+    timer = setInterval(function() {
+      fall();
+    },time)
+  }
+  auto(5000)
+  // 10-方块变形-用二维数组来模拟矩阵，对矩阵进行操作，游戏中的好多操作可通过矩阵变换实现
+  // 矩阵变换点需更多了解
+  function rotate(){
+    var arr = [];
+    var y = matrix.length;
+    var x = matrix[0].length;
+    //把arr变成一个二维数组-矩阵变换策略
+    for(var i=0;i<x;i++){
+      arr.push([]);
+    }
+    for(var i=0;i<y;i++){
+      for(var j=0;j<x;j++){
+        arr[j][y-1-i] = matrix[i][j]
+      }
+    }
+    matrix = arr;
+    console.log(matrix);
+  }
+  // 11、方块碰撞检测
 
   // 方块结构-如下面的田字
   // data[0][5] = 1;
   // data[0][6] = 1;
   // data[1][5] = 1;
   // data[1][6] = 1;
+  // 旋转
+  // [
+  //   [0,1,0],
+  //   [1,1,1]
+  // ]
+  // [
+  //   [1,0],
+  //   [1,1],
+  //   [1,0]
+  // ]
+  // [
+  //   [1,1,1],
+  //   [0,1,0]
+  // ]
+  // [
+  //   [0,1],
+  //   [1,1],
+  //   [0,1]
+  // ]
 </script>
 </html>

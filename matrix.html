@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <button onclick="change()">矩阵变换</button>
+</head>
+<body>
+  <script>
+    var matrix = [
+      [0,1,0],
+      [1,1,1]
+    ];
+    // [
+    //   [1,0], [[]]
+    //   [1,1],
+    //   [1,0]
+    // ]
+    // [
+    //   [1,1,1],
+    //   [0,1,0]
+    // ]
+    // [
+    //   [0,1],
+    //   [1,1],
+    //   [0,1]
+    // ]
+    function test(matrix) {
+      var arr = [];
+      var x = matrix[0].length; // 3
+      var y = matrix.length; // 2
+      for(var i=0;i<x;i++) {
+        arr.push([])
+      }
+      for(var i=0;i<y;i++) {
+        for(var j=0;j<x;j++) {
+          arr[j][y-i-1] = matrix[i][j];
+        }
+      }
+      return arr;
+    }
+    function change() {
+      console.log(test(matrix));
+    }
+  </script>
+</body>
+</html>
