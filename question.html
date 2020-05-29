@@ -501,6 +501,40 @@
   var start25 = "h";
   // console.log(startWith(str25,start25));
 
-  // 26-
+  // 26-斐波那契数列-递归-参数n为第几项，返回那一项结果
+  // 定义F1=1;F2=1;Fn=F(n-1)+F(n-2)
+  function fibonaccii(n) {
+    if(n<=2) {
+      return 1;
+    }else {
+      return fibonaccii(n-1) + fibonaccii(n-2)
+    }
+  }
+  // console.time();
+  // console.log(fibonaccii(40));
+  // console.timeEnd(); // 1000ms
+  function fibonaccii2(n,res1=1,res2=1) {
+    if(n<=2) {
+      return res2;
+    }
+    return fibonaccii2(n-1,res2,res1+res2);
+  }
+  // console.time();
+  // console.log(fibonaccii2(300));
+  // console.timeEnd(); // 0.几ms左右
+  // 27-阶乘-递归操作非常耗性能，因为需要保存非常多的调用记录，耗费时间可以从上面两个中得出
+  function factorial(n) {
+    if(n==1) return 1
+    return n*factiry(n-1)
+  }
+  // console.log(factiry(5)); // 120
+  // 28-阶乘-修改为尾递归-total用来保存累计的结果值
+  // 尾调用-函数的最后一步返回调用另一个函数，并不一定出现在函数的最后面
+  // 使用ES6的函数默认值方式修改，将外层函数里面的变量变为参数
+  function factorial2(n,total=1) {
+    if(n==1) return total
+    return factorial2(n-1,n*total);
+  }
+  // console.log(factorial2(4)); // 120
 </script>
 </html>
