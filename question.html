@@ -1,546 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    #div1 {
-      width: 100px;
-      height: 50px;
-      border: 2px solid red;
-      float: left;
-    }
-    tr:nth-child(2n) {
-      background-color: #f3f3f3;
-    }
-    tr:nth-child(2n+1) {
-      background-color: pink;
-    }
-    tr:nth-child(2n+1):hover {
-      background-color: blue;
-    }
-    #div2 {
-      width: 200px;
-      height: 100px;
-      border: 2px solid red;
-    }
-    .div3 {
-      width: 300px; height: 300px;
-      background: conic-gradient(from 45deg, white, black, white);
-    }
-  </style>
-</head>
-<body>
-  <div id="div1">
-  </div>
-  <table>
-    <thead>表头</thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-      </tr>
-    </tbody>
-  </table>
-  <div id="div2">记录鼠标经过次数停留总时长</div>
-  <p>尖锥变换</p>
-  <div class="div3"></div>
-</body>
-<script>
-  // 1-获取数组中的最大值-Math.max接受Number类型的参数，xxx.call(this,arg1,arg2,arg3)=xxx.apply(this,arguments)
-  var arr = [1,30,2,6]
-  // console.log(Math.max(arr[0],arr[1],arr[2],arr[3])) // 30
-  // console.log(Math.max.call(Math,arr[0],arr[1],arr[2],arr[3])) // 30
-  // console.log(Math.max.apply(Math,arr)) // 30
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			#div1 {
+				width: 100px;
+				height: 50px;
+				border: 2px solid red;
+				float: left;
+			}
 
-  // 2-写一个函数获取页面中宽高大于50px的节点-document.all页面所有节点
-  function traverse() {
-    var arr = [];
-    var elements = [];
-    if (document.all) { // document.all返回页面中所有节点的htmlcollection集合
-      elements = document.all;
-    } else {
-      elements = document.getElementsByTagName("*");
-    }
-    //console.log(elements.length);
-    for (var i = 0; i < elements.length; i++) {
-      var ele = elements[i];
-      //console.log(ele.tagName);
-      //width 返回的是字符串 offsetWidth 返回的是带边框的 Number 型的数字
-      var width = parseFloat(ele.style.width) || ele.offsetWidth;
-      //console.log(width);
-      var height = parseFloat(ele.style.height) || ele.offsetHeight;
-      //console.log(height);
-      if (width > 50 && height > 50) {
-        arr.push(elements[i].tagName);
-      }
-    }
-    return arr;
-  }
-  // console.log(traverse());
+			tr:nth-child(2n) {
+				background-color: #f3f3f3;
+			}
 
-  // 3-sum函数求和
-  // Should equal 15
-  // sum(1, 2, 3, 4, 5);
-  // Should equal 0
-  // sum(5, null, -5);
-  // Should equal 10
-  // sum('1.0', false, 1, true, 1, 'A', 1, 'B', 1, 'C', 1, 'D', 1, 'E', 1, 'F', 1, 'G', 1);
-  // Should equal 0.3, not 0.30000000000000004
-  // sum(0.1, 0.2);
-  function sum() {
-    // arguments对象不是一个Array，只有length和索引，转换方法如下
-    // var args = Array.prototype.slice.call(arguments);
-    // var args = [].slice.call(arguments);
-    // ES2015
-    // const args = Array.from(arguments);
-    // const args = [...arguments];
-    console.log(arguments)
-    let toArray = [...arguments]
-    let firstStep = toArray.filter(item => item !== true && item !== false && item !== null) // 过滤布尔值和null
-    console.log(firstStep)
-    let tempArr = firstStep.map(item => {
-      return (Number(item) !== NaN)
-    })
-    console.log(tempArr)
-  }
-  // sum(1,2,3,33,'23','abc',true,false,'20',null)
-  // 下面简洁版本-对于无法转换的null/NaN等，取后面或值0
-  function sum1() {
-    var nResult = 0;
-    for (var i = 0, l = arguments.length; i < l; i++) {
-      nResult += window.parseFloat(arguments[i]) || 0;
-    }
-    return nResult.toFixed(3) * 1000 / 1000;
-  }
-  // console.log(sum1(1,2,3,33,'23','abc',true,false,'20',null))
+			tr:nth-child(2n + 1) {
+				background-color: pink;
+			}
 
-  // 输出对象中值大于2的key的数组
-  var data1 = {a: 1, b: 2, c: 3, d: 4};
-  let result = Object.keys(data1).filter(x => data1[x] > 2);
-  // console.log(result);
+			tr:nth-child(2n + 1):hover {
+				background-color: blue;
+			}
 
-  // 4-如何获取UA(user agent)浏览器代理信息
-  function whatBrowser() {
-    document.Browser.Name.value=navigator.appName;
-    document.Browser.Version.value=navigator.appVersion;
-    document.Browser.Code.value=navigator.appCodeName;
-    document.Browser.Agent.value=navigator.userAgent;
-  }
+			#div2 {
+				width: 200px;
+				height: 100px;
+				border: 2px solid red;
+			}
 
-  // 5-js对象深拷贝-需要区分数组和对象-while语句，当条件为true的时候会循环执行
-  // var aaa = [];
-  // console.log(aaa instanceof Array)
-  // function clone(obj) {
-  //   var result;
-  //   if(obj instanceof Array) {
-  //     result = []; // 创建一个新的空数组
-  //     let len = obj.length;
-  //     while(len--) {
-  //       result.push(result[len] = obj[len])
-  //     }
-  //     return result;
-  //   }else if(obj instanceof Object) {
-  //     result = {}; // 创建一个新的空对象
-  //     for(var k in obj) {
-  //       result[k] = obj[k]
-  //     }
-  //     return result;
-  //   }else {
-  //     return obj;
-  //   }
-  // }
-  // var arr = [1,3,6,3,26,66]; // [1, 3, 6, 3, 26, 66, 66, 26, 3, 6, 3, 1] 有点问题！！！
-  // var obj = { "name": "zhangsan", "age": 20 }; // { "name": "zhangsan", "age": 20 }
-  // console.log(clone(arr));
+			.div3 {
+				width: 300px;
+				height: 300px;
+				background: conic-gradient(from 45deg, white, black, white);
+			}
+		</style>
+	</head>
 
-  // 6-eval是魔鬼-作用是把字符串形式的js代码解析成js并执行
-  // 避免使用eval非常耗性能，一次解析成js语句，一次执行
-  // eval("alert('我是由eval解析来的alert')")
-  
-  // 7-哪些操作会造成内存泄漏？
-  // 内存泄漏指任何对象在您不再拥有或需要它之后仍然存在。
-  // 垃圾回收器定期扫描对象，并计算引用了每个对象的其他对象的数量。如果一个对象的
-  // 引用数量为 0（没有其他对象引用过该对象），或对该对象的惟一引用是循环的，那么该对
-  // 象的内存即可回收。
-  // 1. setTimeout 的第一个参数使用字符串而非函数的话，会引发内存泄漏。
-  // 2. 闭包
-  // 3. 控制台日志
-  // 4. 循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）
+	<body>
+		<div id="div1"></div>
+		<table>
+			<thead>表头</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="div2">记录鼠标经过次数停留总时长</div>
+		<p>尖锥变换</p>
+		<div class="div3"></div>
+		<!-- <img src="http://m0-pub.bybutter.com/42B5B641-362F-4D36-87FE-78D2F078E567" alt="" /> -->
+		<!-- <img src="./1.jpg" alt="" /> -->
+		<!-- <img
+			src="http://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1594017812&t=c1c35eb6bbef3f4820a490ec0f8c9900"
+			alt=""
+		/> -->
+		<input type="file" id="File" multiple onchange="fileChange()" />
+		<button onclick="download()">Blob 文件下载</button>
+	</body>
+	<script>
+		// 1-获取数组中的最大值-Math.max接受Number类型的参数，xxx.call(this,arg1,arg2,arg3)=xxx.apply(this,arguments)
+		var arr = [1, 30, 2, 6]
+		// console.log(Math.max(arr[0],arr[1],arr[2],arr[3])) // 30
+		// console.log(Math.max.call(Math,arr[0],arr[1],arr[2],arr[3])) // 30
+		// console.log(Math.max.apply(Math,arr)) // 30
 
-  // 8-闭包一题
-  function Foo(){
-    var i=0;
-    return function(){
-      document.write(i++);
-    }
-  }
-  var f1=Foo(),
-  f2=Foo();
-  // f1(); // 0
-  // f1(); // 1
-  // f2(); // 0
-  // f2(); // 1
-  // f2(); // 2
+		// 2-写一个函数获取页面中宽高大于50px的节点-document.all页面所有节点
+		function traverse() {
+			var arr = []
+			var elements = []
+			if (document.all) {
+				// document.all返回页面中所有节点的htmlcollection集合
+				elements = document.all
+			} else {
+				elements = document.getElementsByTagName('*')
+			}
+			//console.log(elements.length);
+			for (var i = 0; i < elements.length; i++) {
+				var ele = elements[i]
+				//console.log(ele.tagName);
+				//width 返回的是字符串 offsetWidth 返回的是带边框的 Number 型的数字
+				var width = parseFloat(ele.style.width) || ele.offsetWidth
+				//console.log(width);
+				var height = parseFloat(ele.style.height) || ele.offsetHeight
+				//console.log(height);
+				if (width > 50 && height > 50) {
+					arr.push(elements[i].tagName)
+				}
+			}
+			return arr
+		}
+		// console.log(traverse());
 
-  // 9-indexOf功能，如果存在返回匹配的位置，否则返回-1
-  function myIndexOf(str,subStr) {
-    var result = str.match(subStr);
-    return result ? result.index : -1
-  }
-  var str1 = "hello";
-  var subStr1 = "o";
-  // console.log(myIndexOf(str1,subStr1));
-  // 或者
-  function myIndexOf1(a,b) {
-    return a.search(b)
-  }
-  // console.log(myIndexOf1(str1,subStr1))
+		// 3-sum函数求和
+		// Should equal 15
+		// sum(1, 2, 3, 4, 5);
+		// Should equal 0
+		// sum(5, null, -5);
+		// Should equal 10
+		// sum('1.0', false, 1, true, 1, 'A', 1, 'B', 1, 'C', 1, 'D', 1, 'E', 1, 'F', 1, 'G', 1);
+		// Should equal 0.3, not 0.30000000000000004
+		// sum(0.1, 0.2);
+		function sum() {
+			// arguments对象不是一个Array，只有length和索引，转换方法如下
+			// var args = Array.prototype.slice.call(arguments);
+			// var args = [].slice.call(arguments);
+			// ES2015
+			// const args = Array.from(arguments);
+			// const args = [...arguments];
+			console.log(arguments)
+			let toArray = [...arguments]
+			let firstStep = toArray.filter(item => item !== true && item !== false && item !== null) // 过滤布尔值和null
+			console.log(firstStep)
+			let tempArr = firstStep.map(item => {
+				return Number(item) !== NaN
+			})
+			console.log(tempArr)
+		}
+		// sum(1,2,3,33,'23','abc',true,false,'20',null)
+		// 下面简洁版本-对于无法转换的null/NaN等，取后面或值0
+		function sum1() {
+			var nResult = 0
+			for (var i = 0, l = arguments.length; i < l; i++) {
+				nResult += window.parseFloat(arguments[i]) || 0
+			}
+			return (nResult.toFixed(3) * 1000) / 1000
+		}
+		// console.log(sum1(1,2,3,33,'23','abc',true,false,'20',null))
 
-  // 10-以下代码的输出结果
-  // console.log(1+ "2"+"2"); // "122" 进行字符串的拼接
-  // console.log(1+ +"2"+"2"); // "32"-- +"2"加号为一元操作运算符，将字符串转换为数字 1+2=3再和"2"拼接
-  // console.log("A"- "B"+"2"); // "NaN2"
-  // console.log("A"- "B"+2); // NaN
+		// 输出对象中值大于2的key的数组
+		var data1 = { a: 1, b: 2, c: 3, d: 4 }
+		let result = Object.keys(data1).filter(x => data1[x] > 2)
+		// console.log(result);
 
-  // 11-js预编译执行-js预编译会将下面代码中的add变为下面同名第二个add，需注意这点
-  var x = 1, y = z = 0;
-  function add(n) {
-    return n = n + 1;
-  }
-  y = add(x);
-  function add(n) {
-    return n = n + 3;
-  }
-  z = add(x);
-  // console.log(x,y,z) // 1，4，4
+		// 4-如何获取UA(user agent)浏览器代理信息
+		function whatBrowser() {
+			document.Browser.Name.value = navigator.appName
+			document.Browser.Version.value = navigator.appVersion
+			document.Browser.Code.value = navigator.appCodeName
+			document.Browser.Agent.value = navigator.userAgent
+		}
 
-  // 12-用js实现sort排序函数-用快速排序实现-找一个基准点(一般取中间位置)
-  // 循环数组，对小于基准值的放数组A，对大于基准值的放数组B，递归调用并拼接返回
-  // 递归每次将左右两侧问题缩小一半？？？可能描述欠准确
-  function quickSort(arr) {
-    if(arr.length <=1) {
-      return arr
-    }
-    var less = [];
-    var greater = [];
-    var pointX = Math.floor(arr.length/2) // 基准点索引
-    var poinxVal = arr.splice(pointX,1)[0] // 基准点值
-    // 遍历数组
-    for(var i=0;i<arr.length;i++) {
-      if(arr[i] < poinxVal) {
-        less.push(arr[i])
-      }else {
-        greater.push(arr[i])
-      }
-    }
-    // 递归调用排序好的数据并将两部分拼接-根据拼接顺序可实现升序或者降序
-    return quickSort(less).concat([poinxVal],quickSort(greater))
-    // return quickSort(greater).concat([poinxVal],quickSort(less))
-  }
-  var arr2 = [2,43,1,5]
-  // console.log(quickSort(arr2))
+		// 5-js对象深拷贝-需要区分数组和对象-while语句，当条件为true的时候会循环执行
+		// var aaa = [];
+		// console.log(aaa instanceof Array)
+		// function clone(obj) {
+		//   var result;
+		//   if(obj instanceof Array) {
+		//     result = []; // 创建一个新的空数组
+		//     let len = obj.length;
+		//     while(len--) {
+		//       result.push(result[len] = obj[len])
+		//     }
+		//     return result;
+		//   }else if(obj instanceof Object) {
+		//     result = {}; // 创建一个新的空对象
+		//     for(var k in obj) {
+		//       result[k] = obj[k]
+		//     }
+		//     return result;
+		//   }else {
+		//     return obj;
+		//   }
+		// }
+		// var arr = [1,3,6,3,26,66]; // [1, 3, 6, 3, 26, 66, 66, 26, 3, 6, 3, 1] 有点问题！！！
+		// var obj = { "name": "zhangsan", "age": 20 }; // { "name": "zhangsan", "age": 20 }
+		// console.log(clone(arr));
 
-  // 13-请给Array本地对象增加一个原型方法，它用于删除数组条目中重复的条目(可能有多个)，
-  // 返回值是一个包含被删除的重复条目的新数组
-  Array.prototype.quchong = function() {
-    var result = [];
-    for(var i=0;i<this.length;i++) {
-      for(var j=i+1;j<this.length;j++) {
-        if(this[i] == this[j]) {
-          result.push(this.splice(j,1)[0]) // splice返回被删除元素，是一个数组，用[0]取值
-        }
-      }
-    }
-    return result
-  }
-  // console.log([1,22,22,3,6,6].quchong())
+		// 6-eval是魔鬼-作用是把字符串形式的js代码解析成js并执行
+		// 避免使用eval非常耗性能，一次解析成js语句，一次执行
+		// eval("alert('我是由eval解析来的alert')")
 
-  // 14-请编写一个 JavaScript 函数 parseQueryString，它的用途是把 URL参数解析为一个对象
-  // var url = “http://www.taobao.com/index.php?key0=0&key1=1&key2=2.....”
-  // var obj = parseQueryString(url);
-  // alert(obj.key0) // 输出 0
-  function parseQueryString(url) {
-    var keys = url.split("?")[1];
-    var temp = keys.split("&");
-    var result = {};
-    for(var i=0;i<temp.length;i++) {
-      var temp2 = temp[i].split("=");
-      result[temp2[0]]=temp2[1]
-    }
-    return result
-  }
-  var url = "http://www.taobao.com/index.php?key0=0&key1=1&key2=2"
-  // console.log(parseQueryString(url))
+		// 7-哪些操作会造成内存泄漏？
+		// 内存泄漏指任何对象在您不再拥有或需要它之后仍然存在。
+		// 垃圾回收器定期扫描对象，并计算引用了每个对象的其他对象的数量。如果一个对象的
+		// 引用数量为 0（没有其他对象引用过该对象），或对该对象的惟一引用是循环的，那么该对
+		// 象的内存即可回收。
+		// 1. setTimeout 的第一个参数使用字符串而非函数的话，会引发内存泄漏。
+		// 2. 闭包
+		// 3. 控制台日志
+		// 4. 循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）
 
-  // 15-请编写一个 JavaScript 函数 toRGB，它的作用是转换 CSS 中常用的颜色编码
-  // 核心的一点是将rbg中的颜色进行16进制的转换
-  // alert(toRGB("#0000FF")); // 输出 rgb(0, 0, 255)
-  // alert(toRGB("invalid")); // 输出 invalid
-  // alert(toRGB("#G00")); // 输出 #G00
-  function toRGB(color) {
-    var reg = /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/;
-    var match = color.match(reg);
-    return match ? 'rgb('+parseInt(match[1],16)+','+parseInt(match[2],16)+','+parseInt(match[3],16)+')' : color
-  }
-  // console.log(toRGB("#0000FF"))
-  // console.log(toRGB("invalid"))
-  // console.log(toRGB("#G00"))
+		// 8-闭包一题
+		function Foo() {
+			var i = 0
+			return function () {
+				document.write(i++)
+			}
+		}
+		var f1 = Foo(),
+			f2 = Foo()
+		// f1(); // 0
+		// f1(); // 1
+		// f2(); // 0
+		// f2(); // 1
+		// f2(); // 2
 
-  // 16-将数字转化为千分位的格式如100000==>100,000 \b匹配单词的开始或结束
-  function formateData(param) {
-    var re=/(?=(?!\b)(\d{3})+$)/g; // 对这段并不是很明白
-    return param.replace(re,",");
-  }
-  var param = "15000000"
-  // console.log(formateData(param))
+		// 9-indexOf功能，如果存在返回匹配的位置，否则返回-1
+		function myIndexOf(str, subStr) {
+			var result = str.match(subStr)
+			return result ? result.index : -1
+		}
+		var str1 = 'hello'
+		var subStr1 = 'o'
+		// console.log(myIndexOf(str1,subStr1));
+		// 或者
+		function myIndexOf1(a, b) {
+			return a.search(b)
+		}
+		// console.log(myIndexOf1(str1,subStr1))
 
-  // 17-取出数组的奇数项和偶数项
-  function evenAndOdd(arr) {
-    var even = [];
-    var odd = [];
-    arr.forEach((item,index) => {
-      if(index % 2 == 0) {
-        even.push(item)
-      }else{
-        odd.push(item)
-      }
-    })
-    return [even,odd]
-  }
-  var arrOdd = [555,222,111,333,777,99999999]
-  // console.log(evenAndOdd(arrOdd))
+		// 10-以下代码的输出结果
+		// console.log(1+ "2"+"2"); // "122" 进行字符串的拼接
+		// console.log(1+ +"2"+"2"); // "32"-- +"2"加号为一元操作运算符，将字符串转换为数字 1+2=3再和"2"拼接
+		// console.log("A"- "B"+"2"); // "NaN2"
+		// console.log("A"- "B"+2); // NaN
 
-  // 18-鼠标在某个元素内累计停留时长
-  var oDiv2 = document.getElementById("div2")
-  var startTime = 0;
-  var endTime = 0;
-  var allTime = 0;
-  var times = 0;
-  oDiv2.onmouseenter = function(ev) {
-    startTime = Date.now();
-  }
-  oDiv2.onmouseleave = function(ev) {
-    endTime = Date.now();
-    times++;
-    allTime += (endTime - startTime) // 初始没加括号-导致没有得到想要的效果、、
-    this.innerHTML = '<h3>'+allTime+'</h3><h4>'+times+'</h4>'
-  }
+		// 11-js预编译执行-js预编译会将下面代码中的add变为下面同名第二个add，需注意这点
+		var x = 1,
+			y = (z = 0)
+		function add(n) {
+			return (n = n + 1)
+		}
+		y = add(x)
+		function add(n) {
+			return (n = n + 3)
+		}
+		z = add(x)
+		// console.log(x,y,z) // 1，4，4
 
-  // 19-回文-第二种
-  function findSymmetryNum(s,o){
-    var arr=[];
-    for(var i=s;i<=o;i++){
-      var str=''+i,sl=str.length,middle=0,flag=true;
-      if(sl%2===0){
-        middle=sl/2;
-      }else{
-        middle = (sl-1)/2;
-      }
-      for(var m=0;m<middle;m++){
-        if(str.substr(0+m,1)!==str.substr(-1-m,1)){
-          flag = false;
-        }
-      }
-      flag&&arr.push(i);
-      }
-      console.log(arr);
-    return arr;
-  }
-  // findSymmetryNum(1,100);
+		// 12-用js实现sort排序函数-用快速排序实现-找一个基准点(一般取中间位置)
+		// 循环数组，对小于基准值的放数组A，对大于基准值的放数组B，递归调用并拼接返回
+		// 递归每次将左右两侧问题缩小一半？？？可能描述欠准确
+		function quickSort(arr) {
+			if (arr.length <= 1) {
+				return arr
+			}
+			var less = []
+			var greater = []
+			var pointX = Math.floor(arr.length / 2) // 基准点索引
+			var poinxVal = arr.splice(pointX, 1)[0] // 基准点值
+			// 遍历数组
+			for (var i = 0; i < arr.length; i++) {
+				if (arr[i] < poinxVal) {
+					less.push(arr[i])
+				} else {
+					greater.push(arr[i])
+				}
+			}
+			// 递归调用排序好的数据并将两部分拼接-根据拼接顺序可实现升序或者降序
+			return quickSort(less).concat([poinxVal], quickSort(greater))
+			// return quickSort(greater).concat([poinxVal],quickSort(less))
+		}
+		var arr2 = [2, 43, 1, 5]
+		// console.log(quickSort(arr2))
 
-  // 20-判断一个字符串中出现次数最多的字符并统计其次数
-  function maxNum(str) {
-    var obj = {};
-    for(var i=0;i<str.length;i++) {
-      var key = str[i]; // 字符串的每一项
-      if(!obj[key]) {
-        obj[key] = 1
-      }else {
-        obj[key]++
-      }
-    }
-    var maxs = 0;
-    var maxKey = "";
-    for(var k in obj) {
-      if(maxs < obj[key]) {
-        maxs = obj[key];
-        maxKey = k;
-      }
-    }
-    return [maxKey, maxs]
-  }
+		// 13-请给Array本地对象增加一个原型方法，它用于删除数组条目中重复的条目(可能有多个)，
+		// 返回值是一个包含被删除的重复条目的新数组
+		Array.prototype.quchong = function () {
+			var result = []
+			for (var i = 0; i < this.length; i++) {
+				for (var j = i + 1; j < this.length; j++) {
+					if (this[i] == this[j]) {
+						result.push(this.splice(j, 1)[0]) // splice返回被删除元素，是一个数组，用[0]取值
+					}
+				}
+			}
+			return result
+		}
+		// console.log([1,22,22,3,6,6].quchong())
 
-  var strMax = "abrsgaasghsaaa";
-  // console.log(maxNum(strMax));
+		// 14-请编写一个 JavaScript 函数 parseQueryString，它的用途是把 URL参数解析为一个对象
+		// var url = “http://www.taobao.com/index.php?key0=0&key1=1&key2=2.....”
+		// var obj = parseQueryString(url);
+		// alert(obj.key0) // 输出 0
+		function parseQueryString(url) {
+			var keys = url.split('?')[1]
+			var temp = keys.split('&')
+			var result = {}
+			for (var i = 0; i < temp.length; i++) {
+				var temp2 = temp[i].split('=')
+				result[temp2[0]] = temp2[1]
+			}
+			return result
+		}
+		var url = 'http://www.taobao.com/index.php?key0=0&key1=1&key2=2'
+		// console.log(parseQueryString(url))
 
-  // 21-短路运算
-  // 语法：表达式1 && 表达式2
-  // 如果第一个表达式1的值为真，则返回表达式2
-  // 如果第一个表达式1的值为假，则返回表达式1
+		// 15-请编写一个 JavaScript 函数 toRGB，它的作用是转换 CSS 中常用的颜色编码
+		// 核心的一点是将rbg中的颜色进行16进制的转换
+		// alert(toRGB("#0000FF")); // 输出 rgb(0, 0, 255)
+		// alert(toRGB("invalid")); // 输出 invalid
+		// alert(toRGB("#G00")); // 输出 #G00
+		function toRGB(color) {
+			var reg = /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
+			var match = color.match(reg)
+			return match
+				? 'rgb(' +
+						parseInt(match[1], 16) +
+						',' +
+						parseInt(match[2], 16) +
+						',' +
+						parseInt(match[3], 16) +
+						')'
+				: color
+		}
+		// console.log(toRGB("#0000FF"))
+		// console.log(toRGB("invalid"))
+		// console.log(toRGB("#G00"))
 
-  // 语法：表达式1 || 表达式2
-  // 如果第一个表达式1的值为真，则返回表达式1
-  // 如果第一个表达式1的值为假，则返回表达式2
-  // console.log(123&&456) // 456
-  // console.log(123||456) // 123
+		// 16-将数字转化为千分位的格式如100000==>100,000 \b匹配单词的开始或结束
+		function formateData(param) {
+			var re = /(?=(?!\b)(\d{3})+$)/g // 对这段并不是很明白
+			return param.replace(re, ',')
+		}
+		var param = '15000000'
+		// console.log(formateData(param))
 
-  // 22-随机抛5枚硬币，求3枚及以上朝上的概率
-  // 设想-如下arrNum可以被分割成多少种两个元素组成的数组即为抛硬币结果总数total
-  // 朝上结果[[1,1],[1,1],[1,1],[1,1],[1,1]] 5种，5/total 为结果
-  // var arrNum = [0,1,0,1,0,1,0,1,0,1] // 模拟5枚硬币正反 不合适用这种解决方式-未解决
-  // function probability(arr) {
-  //   var result = []; // 抛硬币结果集合-二维数组
-  //   for(var i=0;i<arr.length;i+=2) {
-  //     for(var j=i*2+1;j<arr.length;j++) {
-  //       var temp = []
-  //       temp.push(arr[i],arr[j])
-  //       result.push(temp)
-  //     }
-  //   }
-  //   return result
-  // }
-  // console.log(probability(arrNum))
+		// 17-取出数组的奇数项和偶数项
+		function evenAndOdd(arr) {
+			var even = []
+			var odd = []
+			arr.forEach((item, index) => {
+				if (index % 2 == 0) {
+					even.push(item)
+				} else {
+					odd.push(item)
+				}
+			})
+			return [even, odd]
+		}
+		var arrOdd = [555, 222, 111, 333, 777, 99999999]
+		// console.log(evenAndOdd(arrOdd))
 
-  // 22-随机抛硬币
-  // 阶乘函数
-  function factiry(num) {
-    var result = 1;
-    if(num == 1) {
-      return 1
-    }else {
-      for(var i=1;i<=num;i++) {
-        result *= i
-      }
-    }
-    return result
-  }
-  // 排列组合
-  function C(x,y) {
-    return ((factiry(5)/factiry(2))/factiry(3))/Math.pow(2,5) // C(5,3)
-  }
-  // console.log(C(5,3)) // 0.3125 5/16
+		// 18-鼠标在某个元素内累计停留时长
+		var oDiv2 = document.getElementById('div2')
+		var startTime = 0
+		var endTime = 0
+		var allTime = 0
+		var times = 0
+		oDiv2.onmouseenter = function (ev) {
+			startTime = Date.now()
+		}
+		oDiv2.onmouseleave = function (ev) {
+			endTime = Date.now()
+			times++
+			allTime += endTime - startTime // 初始没加括号-导致没有得到想要的效果、、
+			this.innerHTML = '<h3>' + allTime + '</h3><h4>' + times + '</h4>'
+		}
 
-  // 23-去除一个数组里面的重复项
-  // 1-新建一个空数组，检索不在数组中的元素才添加
-  function unique(arr) {
-    var temp = [];
-    for(var i=0;i<arr.length;i++) {
-      if(temp.indexOf(arr[i]) == -1) {
-        temp.push(arr[i])
-      }
-    }
-    return temp
-  }
-  var uniqueArr = [1,1,2,2,3,3,4]
-  // console.log(unique(uniqueArr));
+		// 19-回文-第二种
+		function findSymmetryNum(s, o) {
+			var arr = []
+			for (var i = s; i <= o; i++) {
+				var str = '' + i,
+					sl = str.length,
+					middle = 0,
+					flag = true
+				if (sl % 2 === 0) {
+					middle = sl / 2
+				} else {
+					middle = (sl - 1) / 2
+				}
+				for (var m = 0; m < middle; m++) {
+					if (str.substr(0 + m, 1) !== str.substr(-1 - m, 1)) {
+						flag = false
+					}
+				}
+				flag && arr.push(i)
+			}
+			console.log(arr)
+			return arr
+		}
+		// findSymmetryNum(1,100);
 
-  // 2-对象键值去重
-  function unique2(arr) {
-    var obj = {};
-    var newArr = [];
-    var index = 0;
-    for(var i=0;i<arr.length;i++) {
-      if(obj[arr[i]]==undefined) {
-        obj[arr[i]] = 1;
-        newArr[index++] = arr[i];
-      }else {
-        obj[arr[i]] = 1;
-        continue;
-      }
-    }
-    return newArr;
-  }
-  // console.log(unique2(uniqueArr));
+		// 20-判断一个字符串中出现次数最多的字符并统计其次数
+		function maxNum(str) {
+			var obj = {}
+			for (var i = 0; i < str.length; i++) {
+				var key = str[i] // 字符串的每一项
+				if (!obj[key]) {
+					obj[key] = 1
+				} else {
+					obj[key]++
+				}
+			}
+			var maxs = 0
+			var maxKey = ''
+			for (var k in obj) {
+				if (maxs < obj[key]) {
+					maxs = obj[key]
+					maxKey = k
+				}
+			}
+			return [maxKey, maxs]
+		}
 
-  // 24-定义一个方法，让它可以代理console.log方法
-  // 更多的目的应该是提供一种解决问题的方向，遇到同类问题看是否能由此获得一些思路
-  // 基础版本-如果输入多个参数(不定项个参数)，那么此方法就不能满足要求了
-  function log(msg,msg1) {
-    return console.log(msg,msg1);
-  }
-  // log("hello world","123");
-  // 最终版-call输入每个参数，apply输入参数集合
-  function log2() {
-    return console.log.apply(console,arguments);
-  }
-  // log2("hello world")
-  // log2("hello world","123")
+		var strMax = 'abrsgaasghsaaa'
+		// console.log(maxNum(strMax));
 
-  // 25-判断字符串是否以某个字符开头
-  function startWith(str,start) {
-    return str.indexOf(start) == 0
-  }
-  var str25 = "hello";
-  var start25 = "h";
-  // console.log(startWith(str25,start25));
+		// 21-短路运算
+		// 语法：表达式1 && 表达式2
+		// 如果第一个表达式1的值为真，则返回表达式2
+		// 如果第一个表达式1的值为假，则返回表达式1
 
-  // 26-斐波那契数列-递归-参数n为第几项，返回那一项结果
-  // 定义F1=1;F2=1;Fn=F(n-1)+F(n-2)
-  function fibonaccii(n) {
-    if(n<=2) {
-      return 1;
-    }else {
-      return fibonaccii(n-1) + fibonaccii(n-2)
-    }
-  }
-  // console.time();
-  // console.log(fibonaccii(40));
-  // console.timeEnd(); // 1000ms
-  function fibonaccii2(n,res1=1,res2=1) {
-    if(n<=2) {
-      return res2;
-    }
-    return fibonaccii2(n-1,res2,res1+res2);
-  }
-  // console.time();
-  // console.log(fibonaccii2(300));
-  // console.timeEnd(); // 0.几ms左右
-  // 27-阶乘-递归操作非常耗性能，因为需要保存非常多的调用记录，耗费时间可以从上面两个中得出
-  function factorial(n) {
-    if(n==1) return 1
-    return n*factiry(n-1)
-  }
-  // console.log(factiry(5)); // 120
-  // 28-阶乘-修改为尾递归-total用来保存累计的结果值
-  // 尾调用-函数的最后一步返回调用另一个函数，并不一定出现在函数的最后面
-  // 使用ES6的函数默认值方式修改，将外层函数里面的变量变为参数
-  function factorial2(n,total=1) {
-    if(n==1) return total
-    return factorial2(n-1,n*total);
-  }
-  // console.log(factorial2(4)); // 120
-</script>
+		// 语法：表达式1 || 表达式2
+		// 如果第一个表达式1的值为真，则返回表达式1
+		// 如果第一个表达式1的值为假，则返回表达式2
+		// console.log(123&&456) // 456
+		// console.log(123||456) // 123
+
+		// 22-随机抛5枚硬币，求3枚及以上朝上的概率
+		// 设想-如下arrNum可以被分割成多少种两个元素组成的数组即为抛硬币结果总数total
+		// 朝上结果[[1,1],[1,1],[1,1],[1,1],[1,1]] 5种，5/total 为结果
+		// var arrNum = [0,1,0,1,0,1,0,1,0,1] // 模拟5枚硬币正反 不合适用这种解决方式-未解决
+		// function probability(arr) {
+		//   var result = []; // 抛硬币结果集合-二维数组
+		//   for(var i=0;i<arr.length;i+=2) {
+		//     for(var j=i*2+1;j<arr.length;j++) {
+		//       var temp = []
+		//       temp.push(arr[i],arr[j])
+		//       result.push(temp)
+		//     }
+		//   }
+		//   return result
+		// }
+		// console.log(probability(arrNum))
+
+		// 22-随机抛硬币
+		// 阶乘函数
+		function factiry(num) {
+			var result = 1
+			if (num == 1) {
+				return 1
+			} else {
+				for (var i = 1; i <= num; i++) {
+					result *= i
+				}
+			}
+			return result
+		}
+		// 排列组合
+		function C(x, y) {
+			return factiry(5) / factiry(2) / factiry(3) / Math.pow(2, 5) // C(5,3)
+		}
+		// console.log(C(5,3)) // 0.3125 5/16
+
+		// 23-去除一个数组里面的重复项
+		// 1-新建一个空数组，检索不在数组中的元素才添加
+		function unique(arr) {
+			var temp = []
+			for (var i = 0; i < arr.length; i++) {
+				if (temp.indexOf(arr[i]) == -1) {
+					temp.push(arr[i])
+				}
+			}
+			return temp
+		}
+		var uniqueArr = [1, 1, 2, 2, 3, 3, 4]
+		// console.log(unique(uniqueArr));
+
+		// 2-对象键值去重
+		function unique2(arr) {
+			var obj = {}
+			var newArr = []
+			var index = 0
+			for (var i = 0; i < arr.length; i++) {
+				if (obj[arr[i]] == undefined) {
+					obj[arr[i]] = 1
+					newArr[index++] = arr[i]
+				} else {
+					obj[arr[i]] = 1
+					continue
+				}
+			}
+			return newArr
+		}
+		// console.log(unique2(uniqueArr));
+
+		// 24-定义一个方法，让它可以代理console.log方法
+		// 更多的目的应该是提供一种解决问题的方向，遇到同类问题看是否能由此获得一些思路
+		// 基础版本-如果输入多个参数(不定项个参数)，那么此方法就不能满足要求了
+		function log(msg, msg1) {
+			return console.log(msg, msg1)
+		}
+		// log("hello world","123");
+		// 最终版-call输入每个参数，apply输入参数集合
+		function log2() {
+			return console.log.apply(console, arguments)
+		}
+		// log2("hello world")
+		// log2("hello world","123")
+
+		// 25-判断字符串是否以某个字符开头
+		function startWith(str, start) {
+			return str.indexOf(start) == 0
+		}
+		var str25 = 'hello'
+		var start25 = 'h'
+		// console.log(startWith(str25,start25));
+
+		// 26-斐波那契数列-递归-参数n为第几项，返回那一项结果
+		// 定义F1=1;F2=1;Fn=F(n-1)+F(n-2)
+		function fibonaccii(n) {
+			if (n <= 2) {
+				return 1
+			} else {
+				return fibonaccii(n - 1) + fibonaccii(n - 2)
+			}
+		}
+		// console.time();
+		// console.log(fibonaccii(40));
+		// console.timeEnd(); // 1000ms
+		function fibonaccii2(n, res1 = 1, res2 = 1) {
+			if (n <= 2) {
+				return res2
+			}
+			return fibonaccii2(n - 1, res2, res1 + res2)
+		}
+		// console.time();
+		// console.log(fibonaccii2(300));
+		// console.timeEnd(); // 0.几ms左右
+		// 27-阶乘-递归操作非常耗性能，因为需要保存非常多的调用记录，耗费时间可以从上面两个中得出
+		function factorial(n) {
+			if (n == 1) return 1
+			return n * factiry(n - 1)
+		}
+		// console.log(factiry(5)); // 120
+		// 28-阶乘-修改为尾递归-total用来保存累计的结果值
+		// 尾调用-函数的最后一步返回调用另一个函数，并不一定出现在函数的最后面
+		// 使用ES6的函数默认值方式修改，将外层函数里面的变量变为参数
+		function factorial2(n, total = 1) {
+			if (n == 1) return total
+			return factorial2(n - 1, n * total)
+		}
+		// console.log(factorial2(4)); // 120
+
+		// 29-排列组合m个盒子，n个球，每个盒子至少放k个球，多少种不同的方法m<100,n<1000,k<20
+
+		// fff
+		// let aaaxxx: string = "123333"
+		// console.log(aaaxxx)
+
+		// 29-在chrome 中，打印如下对象信息，第一次出现的并非是对象的完整信息，刷新浏览器之后会出现详细信息
+		// 此问题的原因是浏览器为了性能考虑而做的，与用户行为无关，见一篇思否文章
+		var aaas = { name: '张三', age: 20 }
+		console.log(aaas)
+
+		// 30-file
+		// var objFile = document.getElementById('File').files[0]
+		// console.log(objFile)
+		// console.log(123)
+		function fileChange() {
+			var objFile = document.getElementById('File')
+			//onchange方法 multiple属性可选中多个文件
+			var list = []
+			Object.values(objFile.files).forEach(item => {
+				console.log(item)
+			})
+			console.log(objFile.files)
+		}
+
+		// 31-blob文件下载
+		function download() {
+			const fileName = 'Blob文件.txt'
+			const myBlob = new Blob(['一文彻底掌握 Blob Web API'], { type: 'text/plain' })
+			downloadFun(fileName, myBlob)
+		}
+		function downloadFun(fileName, blob) {
+			const link = document.createElement('a')
+			link.href = URL.createObjectURL(blob)
+			link.download = fileName
+			link.click()
+			link.remove()
+			URL.revokeObjectURL(link.href)
+		}
+	</script>
 </html>
