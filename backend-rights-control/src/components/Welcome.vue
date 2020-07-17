@@ -1,11 +1,13 @@
 <template>
   <div>
     <h3>Welcome</h3>
-    <p>页面中如要对得到的数据进行筛选后再展示的话可以使用computed计算属性，在不改变原数据的情况下</p>
+    <p>
+      页面中如要对得到的数据进行筛选后再展示的话可以使用computed计算属性，在不改变原数据的情况下
+    </p>
     <p>同样也可以在如页面中需要对表格数据进行筛选操作场景下使用计算属性</p>
-    <li v-for="(item,index) in filterMenuList" :key="index">
-      {{item.name}}
-      {{item.age}}
+    <li v-for="(item, index) in filterMenuList" :key="index">
+      {{ item.name }}
+      {{ item.age }}
     </li>
     <!-- <li v-for="(item,index) in filterMenuList33" :key="index">
       {{item}}

@@ -89,8 +89,11 @@
 			src="http://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1594017812&t=c1c35eb6bbef3f4820a490ec0f8c9900"
 			alt=""
 		/> -->
-		<input type="file" id="File" multiple onchange="fileChange()" />
+		<input type="file" id="File" onchange="fileChange()" />
 		<button onclick="download()">Blob 文件下载</button>
+		<h1>图片本地预览-1.DataURL方式：</h1>
+		<input type="file" accept="image/*" onchange="selectFileForDataURL(event)" />
+		<img id="output1" />
 	</body>
 	<script>
 		// 1-获取数组中的最大值-Math.max接受Number类型的参数，xxx.call(this,arg1,arg2,arg3)=xxx.apply(this,arguments)
@@ -586,13 +589,17 @@
 		// console.log(objFile)
 		// console.log(123)
 		function fileChange() {
-			var objFile = document.getElementById('File')
+			var reads = new FileReader()
+			var objFile = document.getElementById('File').files[0]
 			//onchange方法 multiple属性可选中多个文件
-			var list = []
-			Object.values(objFile.files).forEach(item => {
-				console.log(item)
-			})
-			console.log(objFile.files)
+			// var list = []
+			// Object.values(objFile.files).forEach(item => {
+			// 	console.log(item)
+			// })
+			reads.readAsText(objFile, 'utf-8')
+			// console.log(objFile)
+			// console.log(objFile.files[0])
+			console.log(reads)
 		}
 
 		// 31-blob文件下载
@@ -609,5 +616,20 @@
 			link.remove()
 			URL.revokeObjectURL(link.href)
 		}
+
+		// 32-图片本地预览-DataUrl方式
+		function selectFileForDataURL() {
+			const reader = new FileReader()
+			reader.onload = function () {
+				const output = document.querySelector('#output1')
+				output.src = reader.result
+			}
+			reader.readAsDataURL(event.target.files[0])
+		}
+
+		// 33-\n换行
+		alert('hello\nworld')
+
+		// 34-
 	</script>
 </html>
