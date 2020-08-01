@@ -35,6 +35,15 @@
 				height: 300px;
 				background: conic-gradient(from 45deg, white, black, white);
 			}
+			.grids {
+				display: grid;
+				grid-template-columns: 200px 50px 100px; /* 每一列宽度 */
+				grid-template-rows: 50px 100px; /* 每一列高度 */
+			}
+			.grids div {
+				border: 2px solid red;
+				text-align: center;
+			}
 		</style>
 	</head>
 
@@ -94,6 +103,14 @@
 		<h1>图片本地预览-1.DataURL方式：</h1>
 		<input type="file" accept="image/*" onchange="selectFileForDataURL(event)" />
 		<img id="output1" />
+		<div class="grids">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+			<div>6</div>
+		</div>
 	</body>
 	<script>
 		// 1-获取数组中的最大值-Math.max接受Number类型的参数，xxx.call(this,arg1,arg2,arg3)=xxx.apply(this,arguments)
@@ -628,8 +645,41 @@
 		}
 
 		// 33-\n换行
-		alert('hello\nworld')
+		// alert('hello\nworld')
 
-		// 34-
+		// 34-按照对象中某个属性排序-高阶函数
+		var sort33 = [
+			{ name: 'zhangsan', age: 20 },
+			{ name: 'lisi', age: 18 },
+			{ name: 'wangwu', age: 90 },
+		]
+		function compare(parm) {
+			return function (a, b) {
+				var val1 = a[parm]
+				var val2 = b[parm]
+				return val1 - val2
+			}
+		}
+		console.log(sort33.sort(compare('age')))
+
+		// 35-函数柯里化
+		function kelihua(a, b) {
+			return a + b
+		}
+		// console.log(kelihua(10, 30))
+
+		function test(fn) {
+			return fn
+		}
+		var kelihuaAdd = test(kelihua)
+
+		// 36-调用栈
+		var a = 123
+		console.log(a)
+		var num = 20
+		function fn36(num) {
+			return num * num
+		}
+		fn36(num)
 	</script>
 </html>
