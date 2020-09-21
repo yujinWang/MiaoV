@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./js/myPromise.js"></script>
+		<script>
+			// resolve方法将Promise对象的状态从PENDING修改为FULFILLED或者resolved，并执行成功后的注册方法
+			let p1 = new myPromise((resolve, reject) => {
+				// setTimeout(() => {
+				// 	console.log('myPromise')
+				//   resolve()
+				//   // reject()
+				// }, 2000)
+
+				// console.log('myPromise')
+				resolve('你好，西安')
+			})
+			var p2 = p1.then(
+				val => {
+					console.log('val', val)
+					// return 123  // 返回一个值
+					return new myPromise((resolve, reject) => {
+						setTimeout(() => {
+							console.log('你好，中国')
+							resolve('你好世界')
+						}, 1000)
+					})
+				},
+				err => {
+					console.log('err')
+				}
+			)
+			p2.then(
+				val => {
+          console.log('val1', val) // val接受从p2返回的123
+          return '我是return一个简单的值'
+				},
+				err => {
+					console.log('err1')
+				}
+			).then((val) => {
+        console.log('3',val)
+        return new myPromise(resolve => {
+          setTimeout(() => {
+            resolve('我是1秒钟后return的new myPromise对象')
+          },1000)
+        })
+      }).then((val) => {
+        console.log('4',val)
+      })
+		</script>
+	</body>
+</html>

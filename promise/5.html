@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./js/myPromise.js"></script>
+		<script>
+			// resolve方法将Promise对象的状态从PENDING修改为FULFILLED或者resolved，并执行成功后的注册方法
+			// let p1 = new myPromise((resolve, reject) => {
+			// 	reject('你好，西安，这是一条被拒绝的信息')
+			// }).then(val => {
+			//   console.log('val',val)
+			// },err => {
+			//   console.log('err',err)
+			// })
+
+			// err处理，除了用上面的err的方式，也可以用catch的方式实现，需要封装catch方法
+			let p1 = new myPromise((resolve, reject) => {
+        // resolve('正常打印的信息')  // 状态只能被改变一次，任意一个在上面执行，与之对应的另一个将不能被执行
+        reject('你好，西安，这是一条被拒绝的信息')
+			})
+				.then(val => {
+					console.log('val', val)
+				})
+				.catch(err => {
+					console.log('err', err)
+				})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./js/myPromise.js"></script>
+		<script>
+      // 对于如下两种，正常promise中会先执行then(then方法是一个微任务)，再执行setTimeout(宏任务)
+      // 事件队列中同时出现两个任务时，先执行微任务再执行宏任务
+      // 此时会先执行setTimeout再执行then，因为我们模拟时候resolve/reject都是用setTimeout模拟异步的
+      // 解决方式用window.postMessage
+			setTimeout(() => {
+				console.log('setTimeout')
+			}, 0)
+			new myPromise(resolve => {
+        resolve()
+      }).then(() => {
+        console.log('then')
+      })
+
+			// resolve方法将Promise对象的状态从PENDING修改为FULFILLED或者resolved，并执行成功后的注册方法
+			// let p1 = new myPromise((resolve, reject) => {
+			// 	// setTimeout(() => {
+			// 	// 	console.log('myPromise')
+			// 	//   resolve()
+			// 	//   // reject()
+			// 	// }, 2000)
+			// 	console.log('myPromise')
+			// 	resolve()
+			// })
+			// p1.then(
+			// 	val => {
+			// 		console.log('val', val)
+			// 	},
+			// 	err => {
+			// 		console.log('err', err)
+			// 	}
+			// )
+			// p1.then(
+			// 	val => {
+			// 		console.log('val1', val)
+			// 	},
+			// 	err => {
+			// 		console.log('err1', err)
+			// 	}
+			// )
+			// console.log(p1)
+		</script>
+	</body>
+</html>

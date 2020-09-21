@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="./js/myPromise.js"></script>
+		<script>
+			// resolve方法将Promise对象的状态从PENDING修改为FULFILLED或者resolved，并执行成功后的注册方法
+			let p1 = new myPromise((resolve,reject) => {
+				setTimeout(() => {
+					console.log('myPromise')
+          resolve()
+				}, 2000)
+			})
+			console.log(p1)
+		</script>
+	</body>
+</html>
