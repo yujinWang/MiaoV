@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 数组可以包含对象，数组的方法对对象依然适用
+			// 创建构造函数
+			function Point(x, y) {
+				this.x = x
+				this.y = y
+			}
+			// 此函数输出对象数组中的x属性值和y属性值
+			function displayPoints(arr) {
+				for (var i = 0; i < arr.length; i++) {
+					console.log(arr[i].x, arr[i].y)
+				}
+			}
+			var p1 = new Point(1, 2)
+			var p2 = new Point(3, 5)
+			var points = [p1]
+			points.push(p2)
+			console.log(points)
+			displayPoints(points)
+		</script>
+	</body>
+</html>

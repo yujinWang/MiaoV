@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 创建一个记录学生成绩的对象，提供一个添加成绩的方法，以及一个显示学生平均成绩的方法
+			function Show() {
+				this.dataSource = []
+				this.add = add
+				this.average = average
+			}
+			function add(data) {
+				this.dataSource.push(data)
+			}
+			function average() {
+				var total = 0
+				for (var i = 0; i < this.dataSource.length; i++) {
+					total += this.dataSource[i]
+				}
+				return total / this.dataSource.length
+			}
+
+			var studentAchievement = new Show()
+			studentAchievement.add(80)
+			studentAchievement.add(90)
+			studentAchievement.add(80)
+			studentAchievement.add(90)
+			console.log(studentAchievement.dataSource)
+			console.log(studentAchievement.average())
+		</script>
+	</body>
+</html>

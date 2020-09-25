@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			// 在对象中，可以使用数组存储复杂的数据，很多例子的数据都被实现为一个对象，对象内部使用数组保存数据
+			// 如下对象中有两个方法，一个用来添加一条数据，另一个用来算平均气温
+			function weekTemps() {
+				this.dataSource = []
+				this.add = add
+				this.average = average
+			}
+			// 添加数据的add方法
+			function add(temp) {
+				this.dataSource.push(temp)
+			}
+			// 算平均气温方法
+			function average() {
+				var total = 0
+				for (var i = 0; i < this.dataSource.length; i++) {
+					total += this.dataSource[i]
+				}
+				return total / this.dataSource.length
+			}
+
+			var thisWeek = new weekTemps()
+			thisWeek.add(20)
+			thisWeek.add(30)
+			thisWeek.add(20)
+			thisWeek.add(30)
+			thisWeek.add(20)
+			thisWeek.add(30)
+			console.log(thisWeek.dataSource) // 通过add方法添加每天的气温，通过构造函数中的dataSource收集并反应出来
+			console.log(thisWeek.average()) // 本周平均气温
+		</script>
+	</body>
+</html>
