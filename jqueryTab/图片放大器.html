@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<!-- <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script> -->
+		<style>
+			#div1 {
+				width: 300px;
+				height: 300px;
+				border: 2px solid red;
+				position: relative;
+				overflow: hidden;
+			}
+			#div1 img {
+				width: 100%;
+				height: 100%;
+			}
+			#div1 span {
+				width: 150px;
+				height: 150px;
+				background: rgba(0, 255, 0, 0.5);
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			#div2 {
+				width: 500px;
+				height: 500px;
+				border: 2px solid red;
+				overflow: hidden;
+				position: absolute;
+				left: 350px;
+				top: 10px;
+			}
+			#div2 img {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<img src="./mobile-mini.jpg" alt="" />
+			<!-- 半透明遮罩 -->
+			<span></span>
+		</div>
+		<div id="div2">
+			<img src="./mobile-big.jpg" alt="" />
+		</div>
+	</body>
+	<script>
+		window.onload = function () {
+			var oDiv = document.getElementById('div1')
+			var oSpan = oDiv.getElementsByTagName('span')[0]
+			var oDiv2 = document.getElementById('div2')
+			var oImg = oDiv2.getElementsByTagName('img')[0]
+			oDiv.onmouseover = function () {
+				oSpan.style.display = 'block'
+			}
+			// 如果出现问题，可以用onmouseenter，子级不会影响到父级
+			oDiv.onmouseout = function () {
+				oSpan.style.display = 'none'
+			}
+			// 如果出现问题，可以用onmouseleave
+			oDiv.onmousemove = function (ev) {
+				var ev = ev || window.event
+				// 鼠标距离屏幕左侧的距离-div距屏幕左侧的距离，遮罩层和鼠标的位置才一致z，再减遮罩层宽高一半即可实现鼠标居中
+				var L = ev.clientX - oDiv.offsetLeft - oSpan.offsetWidth / 2
+				var T = ev.clientY - oDiv.offsetTop - oSpan.offsetHeight / 2
+				// 限制左右边界
+				if (L < 0) {
+					L = 0
+				} else if (L > oDiv.offsetWidth - oSpan.offsetWidth) {
+					L = oDiv.offsetWidth - oSpan.offsetWidth
+				}
+				// 限制上下边界
+				if (T < 0) {
+					T = 0
+				} else if (T > oDiv.offsetHeight - oSpan.offsetHeight) {
+					T = oDiv.offsetHeight - oSpan.offsetHeight
+				}
+
+				oSpan.style.left = L + 'px'
+				oSpan.style.top = T + 'px'
+
+				var scaleX = L / (oDiv.offsetWidth - oSpan.offsetWidth)
+				var scaleY = T / (oDiv.offsetHeight - oSpan.offsetHeight)
+				oImg.style.left = -scaleX * (oImg.offsetWidth - oDiv2.offsetWidth) + 'px'
+				oImg.style.top = -scaleY * (oImg.offsetHeight - oDiv2.offsetHeight) + 'px'
+			}
+		}
+	</script>
+</html>

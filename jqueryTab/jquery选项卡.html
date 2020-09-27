@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<style>
+			#div1 input,
+			#div2 input,
+			#div3 input {
+				background: pink;
+			}
+			#div1 .active,
+			#div2 .active,
+			#div3 .active {
+				background: red;
+			}
+			#div1 div,
+			#div2 div,
+			#div3 div {
+				width: 200px;
+				height: 200px;
+				border: 1px solid #000000;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 点击触发 -->
+		<div id="div1">
+			<input type="button" class="active" value="1" />
+			<input type="button" value="2" />
+			<input type="button" value="3" />
+			<div style="display: block">111111</div>
+			<div>222222</div>
+			<div>333333</div>
+		</div>
+		<!-- 鼠标移入触发 -->
+		<div id="div2">
+			<input type="button" class="active" value="1" />
+			<input type="button" value="2" />
+			<input type="button" value="3" />
+			<div style="display: block">111111</div>
+			<div>222222</div>
+			<div>333333</div>
+		</div>
+		<!-- 鼠标移入延迟触发 -->
+		<div id="div3">
+			<input type="button" class="active" value="1" />
+			<input type="button" value="2" />
+			<input type="button" value="3" />
+			<div style="display: block">111111</div>
+			<div>222222</div>
+			<div>333333</div>
+		</div>
+	</body>
+	<script>
+		$(function () {
+			// 鼠标点击
+			var t1 = new Tab()
+			t1.init('div1', {}) // 第一个参数为需要的父级，第二个为配置参数
+			// 鼠标移入
+			var t2 = new Tab()
+			t2.init('div2', {
+				event: 'mouseover',
+			})
+			// 鼠标移入延迟200ms
+			var t3 = new Tab()
+			t3.init('div3', {
+				event: 'mouseover',
+				delay: 200,
+			})
+		})
+		function Tab() {
+			this.oParent = null // 定义元素变量
+			this.aInput = null
+			this.aDiv = null
+			this.settings = {
+				// 默认参数
+				event: 'click',
+				delay: 0,
+			}
+		}
+		// 初始化方法-一般不会处理具体的业务，这里只是起获取元素和参数混合的作用
+		Tab.prototype.init = function (oParent, opt) {
+			$.extend(this.settings, opt) // extend方法用于将一个或多个对象的内容合并到目标对象
+			this.oParent = $('#' + oParent) // 获取元素
+			this.aInput = this.oParent.find('input')
+			this.aDiv = this.oParent.find('div')
+			this.change()
+		}
+		// 点击事件的切换
+		Tab.prototype.change = function () {
+			var This = this
+			var timer = null
+			this.aInput
+				.on(this.settings.event, function () {
+					// This.aInput.attr('class', '')
+					// This.aDiv.css('display', 'none')
+					// $(this).attr('class', 'active')
+					// This.aDiv.eq($(this).index()).css('display', 'block')
+					var _this = this
+					if (This.settings.event == 'mouseover' && This.settings.delay) {
+						timer = setTimeout(function () {
+							show(_this)
+						}, 200)
+					} else {
+						show(this)
+					}
+				})
+				.mouseout(function () {
+					// 鼠标离开后清除定时器
+					clearTimeout(timer)
+				})
+			// 对上面元素控制封装在函数中，需修改this指向，否则单独提取的show函数中的this就是window了
+			function show(obj) {
+				This.aInput.attr('class', '') // 先清除其他元素的样式
+				This.aDiv.css('display', 'none') // 清除每个div
+				$(obj).attr('class', 'active') // 给当前元素添加class，this需要用$来包裹成为一个jquery对象才能使用attr等方法
+				// 找到和按钮索引对应的div元素控制显示隐藏，用到eq
+				This.aDiv.eq($(obj).index()).css('display', 'block')
+			}
+		}
+	</script>
+</html>
