@@ -83,12 +83,19 @@
   var timer = null;
   var onOff = false;
   var matrix = mold();
+  var arr0 = [] // 消除一行后在顶部添加一个空数组
+  for(var i=0;i<17;i++) {
+    arr0.push(0)
+  }
+
   render(data, ctx);
   create(matrix);
   function fall() {
     // if(y+matrix.length>=data.length) {
     if (collisionTest()) {
+      clearLine();
       y = 0;
+      x = 7; // 当一个方块下落后另一个方块从顶部出现的横坐标
       matrix = mold();
     }
     clear(matrix);
@@ -100,7 +107,11 @@
   function clear(arr) {
     for (var i = 0; i < arr.length; i++) {
       for (var j = 0; j < arr[i].length; j++) {
-        data[i + y][j + x] = 0;
+        // 简单写法是 data[i + y][j + x] == 1 为了可以赋予其他颜色，判断其是否存在即可
+        if(arr[i][j]) {
+          data[i + y][j + x] = 0;
+        }
+        // data[i + y][j + x] = 0;
       }
     }
   }
@@ -112,13 +123,26 @@
       return true
     }
     // 检测方块最下面一个元素和网格中的元素如果为1则为碰撞，循环需从最后一个开始即len-1
-    for (var i = len - 1; i < len; i++) {
-      for (var j = 0; j < matrix[i].length; j++) {
-        if (matrix[i][j] && data[i + y + 1][j + x] == 1) { // +1检测下面一个方块
-          return true
-        }
+    // 补充条件，还需检测不是位于最下方被底部方块卡住的方块，否则方块会继续下落
+    var arr = matrix[len - 1]
+    var n
+    for(var i=0;i<arr.length;i++) {
+      n = len - 1
+      while (!matrix[n][i]) {
+        n--
+      }
+      if(data[y+1+n][x+i]) {
+        return true
       }
     }
+
+    // for (var i = len - 1; i < len; i++) {
+    //   for (var j = 0; j < matrix[i].length; j++) {
+    //     if (matrix[i][j] && data[i + y + 1][j + x] == 1) { // +1检测下面一个方块
+    //       return true
+    //     }
+    //   }
+    // }
     return false
   }
   play();
@@ -170,7 +194,7 @@
       fall();
     }, time)
   }
-  auto(5000)
+  auto(1000)
   // 10-方块变形-用二维数组来模拟矩阵，对矩阵进行操作，游戏中的好多操作可通过矩阵变换实现
   // 矩阵变换点需更多了解
   function rotate() {
@@ -189,7 +213,26 @@
     matrix = arr;
     console.log(matrix);
   }
-  // 11、方块碰撞检测
+  // 11、方块满一整行消除-在下落过程中的碰撞条件满足的时候调用
+  function clearLine() {
+    var y = data.length
+    var x = data[0].length
+    var flag
+    for(var i=0;i<y;i++) {
+      flag = true
+      for(var j=0;j<x;j++) {
+        if(!data[i][j]) { // 未满一整行置为false
+          flag = false
+        }
+      }
+      if(flag) {
+        data.splice(i,1)
+        data.unshift([].concat(arr0))
+      }
+    }
+  }
+  // 12-方块横向移动碰撞检测完善-之前横向移动时碰到其他方块就会将其他方块清除
+
 
   // 方块结构-如下面的田字
   // data[0][5] = 1;
