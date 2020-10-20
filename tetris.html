@@ -14,14 +14,20 @@
       left: 0;
       margin: auto;
     }
+    #score {
+      color: red;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
+  <div id="score">分数是0</div>
   <canvas width="500" height="500" id="canvas"></canvas>
 </body>
 <script>
   var canvas = document.getElementById("canvas");
+  var oScore = document.getElementById("score");
   var ctx = canvas.getContext("2d");
   // ctx.fillStyle = "red";
   // ctx.fillRect(10,10,50,50)
@@ -84,6 +90,7 @@
   var onOff = false;
   var matrix = mold();
   var arr0 = [] // 消除一行后在顶部添加一个空数组
+  var score = 0; // 分数，先消除一行计1分
   for(var i=0;i<17;i++) {
     arr0.push(0)
   }
@@ -152,18 +159,25 @@
       switch (ev.keyCode) {
         case 37: // 向左移动
           clear(matrix);
-          x--;
-          if (x < 0) {
-            x = 0;
+          // 替换为函数判断的形式参数-1和1配合边界限定函数，若修改为-5/5那么移动到距离左右两侧还有4个空格就不能再移动了
+          if(!collisionTestX(-1)) {
+            x--
           }
+          // x--;
+          // if (x < 0) {
+          //   x = 0;
+          // }
           create(matrix);
           break;
         case 39: // 向右移动
           clear(matrix);
-          x++;
-          if (x + matrix[0].length >= data[0].length) {
-            x = data[0].length - matrix[0].length
+          if(!collisionTestX(1)) {
+            x++
           }
+          // x++;
+          // if (x + matrix[0].length >= data[0].length) {
+          //   x = data[0].length - matrix[0].length
+          // }
           create(matrix);
           break;
         case 38: // 变形
@@ -211,7 +225,7 @@
       }
     }
     matrix = arr;
-    console.log(matrix);
+    // console.log(matrix);
   }
   // 11、方块满一整行消除-在下落过程中的碰撞条件满足的时候调用
   function clearLine() {
@@ -219,6 +233,7 @@
     var x = data[0].length
     var flag
     for(var i=0;i<y;i++) {
+      scoreArr = []
       flag = true
       for(var j=0;j<x;j++) {
         if(!data[i][j]) { // 未满一整行置为false
@@ -226,12 +241,54 @@
         }
       }
       if(flag) {
+        score += 1
         data.splice(i,1)
         data.unshift([].concat(arr0))
       }
     }
+    oScore.innerHTML = '分数是' + score
   }
   // 12-方块横向移动碰撞检测完善-之前横向移动时碰到其他方块就会将其他方块清除
+  // 13-分数统计，消除1行计1分
+  // 14-方块左右移动碰撞检测-如果碰撞了其他方块或者边缘就返回true否则返回false
+  function collisionTestX(n) {
+    // n -1表示向左移动，n 1表示向右移动
+    var maxX = data[0].length - matrix[0].length
+    if(x+n<0 || x+n > maxX) {
+      return true
+    }
+    // var index = 0 // 需声明在循环内，否则每次循环都会在外部的基础上累加
+    if(n<0) {
+
+    for(var i=0;i<matrix.length;i++) {
+      // matrix[i][0]取到二维数组每一项的第一个，但是这样判断存在问题，对于田字和竖条等规则的来说，以此为条件
+      // 没有问题，但是对于L这种的，第0个是没有元素的，第一个才是，所以要引用一个循环来判断此处到底有没有元素
+      // if(matrix[i][0])
+      var index = 0
+      while (!matrix[i][index]) {
+        index++
+      }
+      // 判断此方块的最右边的左边一个格子是否是空
+      if(data[i+y][x+index-1]) {
+        return true
+      }
+    }
+    }else {
+      for(var i=0;i<matrix.length;i++) {
+      // matrix[i][0]取到二维数组每一项的第一个，但是这样判断存在问题，对于田字和竖条等规则的来说，以此为条件
+      // 没有问题，但是对于L这种的，第0个是没有元素的，第一个才是，所以要引用一个循环来判断此处到底有没有元素
+      // if(matrix[i][0])
+      var index = matrix.length
+      while (!matrix[i][index]) {
+        index--
+      }
+      // 判断此方块的最右边的左边一个格子是否是空
+      if(data[i+y][x+index+1]) {
+        return true
+      }
+    }
+    }
+  }
 
 
   // 方块结构-如下面的田字
