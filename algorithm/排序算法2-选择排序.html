@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 冒泡排序是最慢的排序算法之一，但也是最容易实现的排序算法之一
+    // 之所以叫冒泡排序是因为使用这种排序算法时，数据会像气泡一样从数组的一端漂到另一端
+    function CArray(numElements) {
+      this.dataSource = []
+      this.numElements = numElements
+      this.pos = 0
+      this.insert = insert // 插入元素
+      this.toString = toString // 对元素处理，输出格式化每10个一行
+      this.clear = clear // 清空数组，如给每一项赋值0。或者赋其它值
+      this.setData = setData // 设置数值
+      this.swap = swap // 交换数组元素
+      this.bubbleSort = bubbleSort // 冒泡排序
+      this.selectSort = selectSort // 选择排序
+    }
+    // 为数组每一项随机赋值
+    function setData() {
+      for(var i=0;i<this.numElements;i++) {
+        this.dataSource[i] = Math.floor(Math.random() *(this.numElements + 1))
+      }
+    }
+    // 将数组每一项赋值为0
+    function clear() {
+      for(var i=0;i<this.numElements;i++) {
+        this.dataSource[i] = 0
+      }
+    }
+    // 交换数组两个元素的值
+    function swap(arr,index1,index2) {
+      var temp = arr[index1]
+      arr[index1] = arr[index2]
+      arr[index2] = temp
+    }
+    // 插入元素
+    function insert(element) {
+      this.dataSource[this.pos++] = element // this.pos++的方式就决定了第一次执行添加的元素总是位于数组头部
+    }
+    // toString输出数组元素，格式化元素之间添加空格，并在控制台中10个一组的方式打印
+    function toString() {
+      var reStr = ''
+      for(var i=0;i<this.dataSource.length;i++) {
+        reStr += this.dataSource[i] + ' '
+        if(i>0 && (i+1)%10 == 0) { // 书中&&后面条件为i%10==0，但因为i是从0开始需写成(i+1)%10才行
+          reStr += '\n'
+        }
+      }
+      return reStr
+    }
+
+    // 测试
+    var newElements = 10
+    var test = new CArray(newElements)
+    // console.log(test.dataSource) // []此处还未添加值
+    test.setData()
+    // console.log(test.dataSource) // 正常输出，经过setData方法，为数组进行了赋值
+    // console.log(test.toString())
+    // test.insert(888)
+    // console.log(test.dataSource)
+    // test.insert(999)
+    // test.insert(-10)
+    // console.log(test.dataSource)
+    // console.log(test.toString())
+
+    // 冒泡排序方法
+    function bubbleSort() {
+      var numLength = this.dataSource.length
+      // console.time()
+      for(var i=numLength;i>=2;i--) { // for循环某些情况下可以从后往前进行遍历，对于少修改索引的开销来讲可以提高一些效率
+      // for(var i=0;i<numLength;i++) {
+        for(var j=0;j<i;j++) {
+          if(this.dataSource[j] > this.dataSource[j+1]) {
+            this.swap(this.dataSource,j,j+1)
+          }
+        }
+        console.log(this.toString()) // 在外层循环中打印每次内层排序后的结果-可以看到每次内层循环都将最大的移动到数组末尾
+      }
+      // console.timeEnd()
+    }
+    // test.bubbleSort()
+    // console.log(test.dataSource)
+
+    // 选择排序-外层循环循环至倒数第二个元素，因为内层循环还需取到外层循环的下一个元素，也就是数组的最后一个元素
+    function selectSort() {
+      var minIndex,temp
+      for(var i=0;i<this.dataSource.length-1;i++) {
+        minIndex = i
+        for(var j=i+1;j<this.dataSource.length;j++) {
+          if(this.dataSource[j]<this.dataSource[minIndex]) {
+            minIndex = j
+          }
+        }
+        this.swap(this.dataSource,i,minIndex)
+      }
+    }
+    test.selectSort()
+    console.log(test.dataSource)
+
+
+    // 排序算法方法实现
+    var example=[8,94,15,88,55,76,21,39];
+    function selectSort1(arr){
+        var len=arr.length;
+        var minIndex,temp;
+        console.time('选择排序耗时');
+        for(i=0;i<len-1;i++){
+            minIndex=i;
+            for(j=i+1;j<len;j++){
+                if(arr[j]<arr[minIndex]){
+                    minIndex=j;
+                }
+            }
+        temp=arr[i];
+        arr[i]=arr[minIndex];
+        arr[minIndex]=temp;
+        }
+        console.timeEnd('选择排序耗时');
+        return arr;
+    }
+    console.log(selectSort1(example));
+  </script>
+</body>
+</html>
