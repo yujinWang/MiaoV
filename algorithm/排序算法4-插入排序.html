@@ -28,9 +28,8 @@
   </style>
 </head>
 <body>
-  <div id="div1">
-
-  </div>
+  <div id="div1"></div>
+  <button onclick="sortBtn()">排序</button>
   <script>
     var oDiv = document.getElementById('div1')
     var aDiv = oDiv.getElementsByTagName('div')
@@ -41,7 +40,7 @@
       this.numElements = numElements
       this.pos = 0
       this.insert = insert // 插入元素
-      this.toString = toString // 对元素处理，输出格式化每10个一行
+      this.toString = toString // 对元素处理，如输出格式化每10个一行
       this.clear = clear // 清空数组，如给每一项赋值0。或者赋其它值
       this.setData = setData // 设置数值
       this.swap = swap // 交换数组元素
@@ -51,17 +50,19 @@
     }
     // 为数组每一项随机赋值
     // 问题，循环中的随机数未用变量保存，导致数据不一致，修改见后续排序算法4-插入排序
+    var randomNum,r,g,b;
+    var colorArr = []
     function setData() {
       for(var i=0;i<this.numElements;i++) {
-        this.dataSource[i] = Math.ceil(Math.random() *(this.numElements + 1)) // floor当出现0布局错乱，用ceil代替
-        aDiv[i].innerHTML = Math.ceil(Math.random() *(this.numElements + 1))
-        aDiv[i].style.height = Math.ceil(Math.random() *(this.numElements + 1)) * 20 + 'px'
-        var r = Math.floor(Math.random() * 22 * this.numElements);
-        var g = Math.floor(Math.random() * 22 * this.numElements);
-        var b = Math.floor(Math.random() * 22 * this.numElements);
+        randomNum = Math.ceil(Math.random() *(this.numElements + 1))
+        this.dataSource[i] = randomNum // floor当出现0布局错乱，用ceil代替，原理基本不变
+        aDiv[i].innerHTML = randomNum
+        aDiv[i].style.height = randomNum * 20 + 'px'
+        r = Math.floor(Math.random() * 22 * this.numElements);
+        g = Math.floor(Math.random() * 22 * this.numElements);
+        b = Math.floor(Math.random() * 22 * this.numElements);
         aDiv[i].style.background = "rgb(" + r + "," + g + "," + b + ")"
-        // console.log(oDiv)
-        // console.log(Array.from(aDiv))
+        colorArr.push("rgb(" + r + "," + g + "," + b + ")")
       }
     }
     // 将数组每一项赋值为0
@@ -85,7 +86,7 @@
       var reStr = ''
       for(var i=0;i<this.dataSource.length;i++) {
         reStr += this.dataSource[i] + ' '
-        if(i>0 && (i+1)%10 == 0) { // 书中&&后面条件为i%10==0，但因为i是从0开始需写成(i+1)%10才行
+        if(i>0 && (i+1)%10 == 0) { // 原始&&后面条件为i%10==0，但因为i是从0开始需写成(i+1)%10才行
           reStr += '\n'
         }
       }
@@ -164,7 +165,20 @@
       }
     }
     test.insertSort()
-    console.log(test.dataSource)
+    // console.log(test.dataSource)
+    // console.log(colorArr)
+
+    function sortTest() {
+      for(var i=0;i<test.dataSource.length;i++) {
+        aDiv[i].innerHTML = test.dataSource[i]
+        aDiv[i].style.height = aDiv[i].innerHTML * 20 + 'px'
+      }
+    }
+
+    // 排序方法
+    function sortBtn() {
+      sortTest()
+    }
 
   </script>
 </body>
