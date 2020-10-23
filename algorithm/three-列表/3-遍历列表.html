@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 在列表上自由移动的一组方法
+    // 回到第一个元素
+    function front() {
+      this.pos = 0
+    }
+    // 回到最后一个元素
+    function end() {
+      this.pos = this.listSize-1
+    }
+    // 前一个元素
+    function prev() {
+      --this.pos
+    }
+    // 下一个元素
+    function next() {
+      if(this.pos < this.listSize) {
+        ++this.pos
+      }
+    }
+    // 当前元素
+    function currentPos() {
+      return this.pos
+    }
+    // 移动元素到指定位置
+    function moveTo(position) {
+      this.pos = position
+    }
+    // 获取元素
+    function getElement() {
+      return this.dataSource[this.pos]
+    }
+    
+  </script>
+</body>
+</html>

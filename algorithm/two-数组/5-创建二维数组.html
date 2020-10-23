@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 二维数组类似一种由行和列组成的数据表格，在js中创建二维数组，需要先创建一个数组，然后让数组的每个元素也是一个数组，
+        // 最起码我们要知道二维数组要包含多少行，有了这个信息就能创建一个n行1列的二维数组了
+        var two = []
+        var rows = 10
+        for(var i=0;i<rows;i++) {
+            two[i] = []
+        }
+        console.log(two)
+        // 写一个方法创建二维数组，并可以根据索引找到某个元素
+        // 创建一个5行5列的二维数组，每一项的值为init，例如通过result[2][2]可以访问到具体的某个元素
+        function show(rows,cols,init) {
+            var arr = []
+            for(var i=0;i<rows;i++) {
+                var columns = []
+                for(var j=0;j<cols;j++) {
+                    columns[j] = init
+                }
+                arr[i] = columns
+            }
+            return arr
+        }
+        var result = show(5,5,2)
+        console.log(result)
+        console.log(result[2][1])
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 类定义及一些操作方法
+    function Dictionary() {
+      this.add = add
+      this.dataSource = new Array
+      this.find = find
+      this.remove = remove
+      this.showAll = showAll
+      this.count = count
+      this.clear = clear
+    }
+    function add(key,value) {
+      this.dataSource[key] = value
+    }
+    function find(key) {
+      return this.dataSource[key]
+    }
+    function remove(key) {
+      delete this.dataSource[key]
+    }
+    function showAll() {
+      var dataKeys = Array.prototype.slice.call(Object.keys(this.dataSource))
+      for(var key in dataKeys) {
+        console.log(dataKeys[key] + '---->' +this.dataSource[dataKeys[key]])
+      }
+    }
+    // 字典中元素的个数，为什么不使用length属性，因为当键的类型为字符串时，length属性是无法使用的
+    // 这里采用循环的方式每次为变量赋值，最后再输出
+    function count() {
+      var n = 0
+      Object.keys(this.dataSource).forEach(function() {
+        n++
+      })
+      return n
+    }
+    function clear() {
+      var that = this // this处理下
+      Object.keys(this.dataSource).forEach(function(key) {
+        delete that.dataSource[key]
+      })
+    }
+    // 测试
+    var test = new Dictionary()
+    test.add('aaa','hello')
+    test.add('bbb','world')
+    test.add('ccc','xian')
+    test.add('ddd','你好世界')
+    test.showAll()
+    console.log('字典中元素的个数',test.count())
+    console.log('*******************删除了字典中的bbb**********************')
+    test.remove('bbb')
+    test.showAll()
+    console.log('字典中元素的个数',test.count())
+    console.log('******************使用clear方法清除了字典中的所有元素********************')
+    test.clear()
+    test.showAll()
+
+  </script>
+</body>
+</html>

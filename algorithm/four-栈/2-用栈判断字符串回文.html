@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 实现一个栈，当务之急是决定存储数据的底层结构，这里采用的是数组
+    // 用dataSource来保存栈内数据，top记录栈顶位置，如果有元素被压入push和弹出pop
+    // 那么该变量存储的值也将发生相应的变化
+    // Stack类定义-仅就判断回文定义几个必要的变量和方法
+    function Stack() {
+      this.dataSource = []
+      this.pop = pop
+      this.push = push
+      this.length = length
+      this.top = 0
+    }
+    function pop() {
+      return this.dataSource[--this.top]
+    }
+    function push(element) {
+      this.dataSource[this.top++] = element
+    }
+    function length() {
+      return this.top
+    }
+    // 对定义Stack类的测试
+    var s1 = new Stack()
+    s1.push('world')
+    s1.push('888')
+    s1.push('999')
+    console.log('new Stack对象',s1,s1.length(),s1.pop())
+    // 用定义的Stack类来判断字符串是不是回文-基本思路，先对字符串做一次入栈操作
+    // 然后再对入栈的对象做一次出栈操作判断二者是否相等
+    function isPalindrome2(word) {
+      var s = new Stack()
+      for(var i=0;i<word.length;i++) {
+        s.push(word[i])
+      }
+      var rword = ''
+      while (s.length() > 0) {
+        rword += s.pop()
+      }
+      if(word == rword) {
+        return word + '是回文'
+      }else {
+        return word + '不是回文'
+      }
+    }
+    var result = isPalindrome2('hello')
+    console.log(result) // hello不是回文
+    var result2 = isPalindrome2('aaabbaaa')
+    console.log(result2) // aaabbaaa是回文
+
+    // 可以利用数组的push/pop方法模拟进栈出栈
+    // 实际测试发现，如下代用数组的实现方式存在问题
+    // 因为当pop之后数组已经变为空了，无法进行比较，判断条件放在上面的话，下面str为空
+    // 也无法进行条件判断
+    // function isPalindrome(word) {
+    //   var arr = []
+    //   for(var i=0;i<word.length;i++) {
+    //     arr.push(word[i]) // 将字符串每一项压入栈arr，这里将arr作为栈的底层容器
+    //   }
+    //   var str = ''
+    //   while (arr.length) {
+    //     str += arr.pop() // 出栈操作，将栈内的每一项取出并放到字符串中
+    //   }
+    // }
+    // isPalindrome('hello')
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 深拷贝，通过遍历数组每一项，将其放到另一个新建的空数组中，实现数组深拷贝
+        function deepCopy(arr1,arr2) {
+            for(var i=0;i<arr1.length;i++) {
+                arr2[i] = arr1[i]
+            }
+        }
+        var arr1 = [1,2,3,4,5]
+        var arr2 = []
+        deepCopy(arr1,arr2)
+        console.log('经过函数拷贝后的arr2',arr2)
+        console.log('原来的arr1',arr1)
+        arr2.push(666)
+        console.log('对arr2 push了一项666',arr2)
+        console.log('再次打印arr1，发现arr1未被修改，深拷贝切断了二者的关系',arr1)
+    </script>
+</body>
+</html>

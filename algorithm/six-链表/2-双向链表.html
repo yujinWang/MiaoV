@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 尽管从链表的头节点遍历到尾节点很简单，但是，从后往前遍历则没那么简单
+    // 通过给Node对象增加一个属性，该属性存储指向前驱节点的链接，这样就容易多了
+    // 此时向链表中插入一个节点需要做更多的工作，我们需要指定该节点正确的前驱和后继
+    // 但是从链表中删除节点时候效率更高了，因为不需要再查找待删除节点的前驱节点了
+    
+    // 首先为Node类添加一个previous属性
+    function Node(element) {
+      this.element = element
+      this.next = null
+      this.previous = null
+    }
+    // insert方法和单向链表相似，不过需要设置新节点的previous属性，使其指向该节点的前驱
+    function insert(newElement,item) {
+      var newNode = new Node(newElement) // 新节点
+      var current = this.find(item) // 找到当前节点
+      newNode.next = current.next // 新节点的后继
+      newNode.previous = current // 新节点的前驱-添加前驱后此节点在链表中就被定位了
+      current.next = newNode
+    }
+    // remove方法-双向链表的remove方法，因为节点在链表中的位置已经确定，所以比单向链表效率更高
+    function remove(item) {
+      var currNode = this.find(item) // 找到待删除的节点
+      if(currNode.next != null) {
+        currNode.previous.next = currNode.next // 1、待删除节点的前驱节点的后继指向待删除节点的后继
+        currNode.next.previous = currNode.previous // 2、待删除节点的后继节点的前驱指向待删除节点的前驱
+        currNode.next = null
+        currNode.previous = null
+      }
+    }
+    // findLast方法-找到链表中的最后一个节点
+    // 为了完成以反序显示链表中元素这类任务？？？，故添加一个工具方法findLast
+    function findLast() {
+      var currNode = this.head // 定义初始节点，通过while循环找到链表中最后的一个节点
+      while (currNode.next != null) {
+        currNode = currNode.next
+      }
+      console.log('该链表的最后一项是',currNode)
+      return currNode
+    }
+    // 有了以上方法findLast方法，就可以实现一个方法，来反序显示双向链表中的元素 dispReverse方法
+    function dispReverse() {
+      var currNode = this.head
+      currNode = this.findLast()
+      while (currNode.previous != null) {
+        console.log(currNode.element)
+        currNode = currNode.previous
+      }
+    }
+
+    // 有了以上的基础，双向链表LList类的实现如下
+    function Node(element) {
+      this.element = element
+      this.next = null
+      this.previous = null
+    }
+    function LList() {
+      this.head = new Node('head')
+      this.find = find
+      this.insert = insert
+      this.display = display
+      this.remove = remove
+      this.findLast = findLast
+      this.dispReverse = dispReverse
+    }
+    // 补充几个上面没有的方法
+    function find(item) {
+      var currNode = this.head
+      while (currNode.element != item) {
+        currNode = currNode.next
+      }
+      return currNode
+    }
+    function display() {
+      var currNode = this.head
+      while (currNode != null && currNode.next != null ) { // 添加条件currNode != null当前节点不能为null
+        console.log(currNode.next.element)
+        currNode = currNode.next
+      }
+    }
+
+    // 测试
+    var names = new LList()
+    names.insert('aaaaa','head')
+    names.insert('bbbbb','aaaaa')
+    names.insert('ccccc','bbbbb')
+    names.insert('ddddd','ccccc')
+    // names.remove('ccccc') // remove方法没生效，暂无法解决
+    names.display()
+    names.findLast()
+    // names.dispReverse()
+  </script>
+</body>
+</html>

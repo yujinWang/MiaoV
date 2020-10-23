@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 数组不总是组织数据的最佳结构，因为在很多编程语言中，数组的长度是固定的，所以当数组被填满时
+    // 再要加入新的元素会变得非常困难，在数组中，添加和删除元素也很困难，因为要将数组中的其他元素
+    // 向前或者向后平移，然而js中的数组并不存在以上问题，使用splice方法不需要再访问数组其他元素了
+    // js中数组的主要问题是，它被实现成了对象，与其他语言的数组(如C++ Java)中的相比，效率很低
+    // 如果发现数组在实际中使用很慢，就可以考虑用链表来代替，除了对数据的随机访问，链表几乎可以
+    // 用在任何可以使用一维数组的场景中。但如果需要随机访问，数组仍然是最佳的选择
+    
+    // 链表的定义
+    // 链表是由一组节点组成的集合，每个节点使用一个对象的引用指向它的后继，指向另一个节点的引用叫链
+    // 数组元素靠它们的位置进行引用，链表元素则是互相之间的关系进行引用
+    // 链表的尾元素通常指向一个null节点(书中独立的一句话，存疑？？？)
+
+    // 链表插入元素，向链表中插入一个节点，需要明确指出在哪个节点的前面还是后面插入，需要修改它前面的节点，
+    // 使其指向新加入的节点
+    // 而新加入的节点指向原来前驱指向的节点
+    // 链表删除元素，将待删除元素的前驱节点指向待删除元素的后继节点，同时将待删除元素指向null
+
+    // 设计一个基于基于对象的链表
+    // Node类
+    // Node类包含两个属性，element用来保存节点上的数据，next用来保存指向下一个节点的链接
+    // next初始指向null
+    function Node(element) {
+      this.element = element
+      this.next = null
+    }
+    // LinkedList类
+    // LinkedList提供了对链表进行操作的方法，该类的功能包括插入删除节点，在列表中查找指定的值
+    // head节点的next属性被初始化为null，当有新元素插入时，next就会指向新的元素，所以这里没有
+    // 修改next的值
+    function LList() {
+      this.head = new Node('head')
+      this.find = find // 该方法遍历链表，查找给定数据
+      this.insert = insert
+      this.findPrevious = findPrevious
+      this.remove = remove
+      this.display = display
+    }
+    function find(item) {
+      var currNode = this.head
+      while (currNode.element != item) {
+        currNode = currNode.next
+      }
+      return currNode
+    }
+    // 一旦找到“后面”的节点，就可以将新节点插入链表了
+    // 在一个已知节点后面插入元素
+    function insert(newElement,item) {
+      var newNode = new Node(newElement) // 新节点
+      var current = this.find(item) // 查找到的当前元素节点
+      newNode.next = current.next // 指向新节点的引用
+      current.next = newNode // 在当前节点后面插入元素
+    }
+    // display方法用来显示链表中的元素
+    function display() {
+      var currNode = this.head // 初始化当前节点元素
+      while (currNode != null && currNode.next != null) { // 书中错误1 条件还需加currNode.next != null否则下一步循环就为空
+        console.log(currNode.next.element)
+        currNode = currNode.next
+      }
+    }
+    // 测试1
+    var cities = new LList()
+    cities.insert('beijing','head')
+    // cities.display()
+    cities.insert('hello','head')
+    // cities.display()
+    cities.insert('world','head')
+    cities.display()  // world hello beijing
+    console.log('--------------分割线下另一种链表添加元素方式-----------------')
+
+    // 测试2
+    var cities2 = new LList()
+    cities2.insert('aaaa','head')
+    cities2.insert('bbbb','aaaa')
+    cities2.insert('cccc','bbbb')
+    cities2.insert('dddd','cccc')
+    cities2.insert('eeee','dddd')
+    cities2.display()
+
+    // 从链表中删除一个节点
+    // 从链表中删除节点，需要先找到待删除节点前面的节点，找到这个节点后修改它的next属性，使其不再
+    // 指向待删除的节点，而是指向待删除节点的下一个节点，定义一个findPervious
+    function findPrevious(item) {
+      var currNode = this.head
+      while ( (currNode.next != null) && currNode.next.element != item ) {
+        currNode = currNode.next
+      }
+      return currNode
+    }
+    // remove从链表中删除一个节点，让前一个节点指向自己的下一个节点
+    function remove(item) {
+      var prevNode = this.findPrevious(item)
+      if(prevNode != null) {
+        prevNode.next = prevNode.next.next
+      }
+    }
+    cities2.remove('aaaa')
+    console.log('--------------分割线下为从链表中删除某节点----------------')
+    cities2.display()
+  </script>
+</body>
+</html>

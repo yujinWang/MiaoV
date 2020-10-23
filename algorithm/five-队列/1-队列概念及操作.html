@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 队列是一种列表，不同的是队列只能在队尾插入元素，在队首删除元素
+    // 队列用于存储按顺序排列的数据，先进先出
+    // 队列的其中一项重要操作是读取队头的元素，暂定义为peek()，该操作
+    // 返回队头元素，但不把它从队列中删除
+    // 实现一个完整的队列类Queue()
+    function Queue() {
+      this.dataSource = [] // 保存数据
+      this.enqueue = enqueue // 向队列中添加一个元素
+      this.dequeue = dequeue // 删除队列中的元素
+      this.front = front // 队列中的第一个元素
+      this.back = back // 队列中的最后一个元素
+      this.toString = toString // 将队列中元素变为字符串并换行
+      this.empty = empty
+    }
+    function enqueue(element) {
+      this.dataSource.push(element)
+    }
+    function dequeue() {
+      return this.dataSource.shift()
+    }
+    function front() {
+      return this.dataSource[0]
+    }
+    function back() {
+      return this.dataSource[this.dataSource.length - 1]
+    }
+    function toString() {
+      var retStr = ''
+      for(var i=0;i<this.dataSource.length;i++) {
+        retStr += this.dataSource[i] + '\n'
+      }
+      return retStr
+    }
+    function empty() {
+      if(this.dataSource.length == 0) {
+        return true
+      }else {
+        return false
+      }
+    }
+    // 测试
+    var q = new Queue()
+    q.enqueue('hello')
+    q.enqueue('world')
+    q.enqueue('88888')
+    console.log('q打印结果',q)
+    console.log(q.toString())
+    console.log('q.front打印结果',q.front())
+    console.log('q.back打印结果',q.back())
+  </script>
+</body>
+</html>

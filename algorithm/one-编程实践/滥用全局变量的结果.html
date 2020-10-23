@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // js中定义变量不允许不带关键字var-简单的东西还要做下笔记？？？？？？？，照着书本记录一下加强印象
+        function show() {
+            scope = 'local'
+            return scope
+        }
+        scope = 'global'
+        console.log(scope) // 'global' 输出全局定义的变量
+        console.log(show()) // 'local' 输出函数中定义的local
+        console.log(scope) // 'local' 此处的scope已经被show()方法所修改，改变了全局中定义的scope变为了global
+    </script>
+</body>
+</html>

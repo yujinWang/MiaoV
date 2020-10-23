@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 计算5的阶乘-常规方式，会占用非常多的内存，因为每次调用都需要保存一次
+        // 任何可以被递归定义的函数，都可以被改写为迭代式的程序-先mark一下，没具体的例子还不能很好的理解
+        function factorial(num) {
+            if(num == 1) {
+                return num
+            }else {
+                return num * factorial(num - 1)
+            }
+        }
+        console.log(factorial(5))
+        // 尾调用优化，就是最后一步需要返回一个函数只有一个操作，而不是像上面的还有num和函数乘积的形式
+        // 或者某个函数的最后一步是调用另一个函数
+        function factorial22(num,total) {
+            if(num == 1) {
+                return total
+            }else {
+                console.log(total)
+                return factorial22(num-1,num * total)
+            }
+        }
+        console.log(factorial22(5,1))
+    </script>
+</body>
+</html>
