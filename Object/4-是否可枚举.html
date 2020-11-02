@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Object.defineProperty的作用是直接在一个对象上定义一个新属性，或者修改一个已经存在的属性
+    // Object.defineProperty(obj,prop,desc)
+    let Person = {}
+    Object.defineProperty(Person,'name',{
+      value: 'jack',
+      enumerable: false
+    })
+    Person.gender = 'tom'
+    Object.defineProperty(Person,'age',{
+      value: '100',
+      enumerable: true
+    })
+    console.log(Object.keys(Person)) // ["gender", "age"] 由于jack设置为不可枚举，打印中并不会包含
+    console.log(Person.propertyIsEnumerable('name')) // false
+    console.log(Person.propertyIsEnumerable('gender')) // true
+    console.log(Person.propertyIsEnumerable('age')) // true
+  </script>
+</body>
+</html>

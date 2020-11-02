@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // Object.defineProperty的作用是直接在一个对象上定义一个新属性，或者修改一个已经存在的属性
+    // Object.defineProperty(obj,prop,desc)
+    // obj-需要定义属性的当前对象
+    // prop-当前需要定义的属性名
+    // desc-属性描述符
+    let Person = {}
+    let temp = null
+    Object.defineProperty(Person,'name',{
+      get: function() {
+        return temp
+      },
+      set: function(val) {
+        temp = val
+      }
+    })
+    Person.name = 'jack'
+    console.log(Person.name)
+  </script>
+</body>
+</html>

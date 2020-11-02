@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    // Object.defineProperty的作用是直接在一个对象上定义一个新属性，或者修改一个已经存在的属性
+    // Object.defineProperty(obj,prop,desc)
+    // configurable描述属性是否配置，以及是否可删除
+    // enumerable描述属性是否会出现在for in和Object.keys()的遍历中
+    // writable是否可以改变
+    let Person = {}
+    Object.defineProperty(Person,'name',{
+      value: 'jack',
+      configurable: false,
+      enumerable: true,
+      writable: true
+    })
+    console.log(Person.name)
+    // delete(Person.name) //Uncaught TypeError: Cannot delete property 'name' of #<Object> 属性无法删除，前提是需使用严格模式
+    console.log(Person.name)
+  </script>
+</body>
+</html>
